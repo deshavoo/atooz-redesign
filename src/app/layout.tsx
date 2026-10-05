@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
+import { Alexandria } from "next/font/google";
 import "./globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
-const cairo = Cairo({
+const alexandria = Alexandria({
   subsets: ["arabic", "latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-cairo",
+  variable: "--font-alexandria",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -21,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={cairo.variable}>{children}</body>
+      <body className={`${alexandria.variable}`}>{children}
+        <CustomCursor />
+      </body>
     </html>
   );
 }

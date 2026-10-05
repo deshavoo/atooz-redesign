@@ -79,7 +79,6 @@ export default function OurWorkSection() {
         }
     };
 
-    // Auto Play
     useEffect(() => {
         const timer = window.setInterval(() => {
             setIndex((current) => (current + 1) % slides.length);
@@ -154,7 +153,7 @@ export default function OurWorkSection() {
             `}</style>
 
             <div className="mx-auto max-w-7xl">
-                {/* Header */}
+
                 <h2
                     id="our-work-title"
                     className="ow-in mb-12 max-w-2xl md:mb-20"
@@ -174,7 +173,7 @@ export default function OurWorkSection() {
                 </h2>
 
                 <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-                    {/* Image */}
+
                     <div
                         className="ow-in lg:col-span-7"
                         style={{ ["--d" as string]: "120ms" }}
@@ -217,7 +216,7 @@ export default function OurWorkSection() {
                         </div>
                     </div>
 
-                    {/* Service content */}
+
                     <div
                         className="ow-in lg:col-span-5"
                         style={{ ["--d" as string]: "240ms" }}
@@ -245,7 +244,7 @@ export default function OurWorkSection() {
                             </div>
                         </div>
 
-                        {/* Progress + controls */}
+
                         <div className="mt-8 flex items-center gap-6">
                             <div className="flex items-center gap-2">
                                 <button
@@ -318,7 +317,7 @@ export default function OurWorkSection() {
                             </div>
                         </div>
 
-                        {/* Service navigation */}
+
                         <ul className="mt-10 border-t border-white/10 md:mt-12">
                             {services.map((s, i) => {
                                 const isActive = i === active.service;
