@@ -148,24 +148,6 @@ export default function AboutSection() {
               إعلامية وتواصلية متكاملة.
             </p>
           </div>
-
-          <div className="mt-16 border-t border-white/8 pt-8">
-            <div className="flex items-center justify-center gap-4">
-              <span
-                aria-hidden="true"
-                className="h-px w-12 bg-cyan-300/60"
-              />
-
-              <span className="text-xs font-medium tracking-[0.2em] text-white/30">
-                A2Z MEDIA
-              </span>
-
-              <span
-                aria-hidden="true"
-                className="h-px w-12 bg-cyan-300/60"
-              />
-            </div>
-          </div>
         </article>
       </div>
     </section>
