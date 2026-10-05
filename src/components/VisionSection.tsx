@@ -41,17 +41,17 @@ const VALUES = [
 
 const GOALS = [
   {
-    number: "-",
+
     title: "التوسع",
     text: "نحن ملتزمون بتوسيع نطاقنا وقدراتنا، وجلب حلول مبتكرة لمزيد من الشركات في جميع أنحاء المنطقة. هدفنا هو أن نصبح الشريك المفضل للشركات التي تتطلع إلى تحويل استراتيجيات التواصل الخاصة بها.",
   },
   {
-    number: "-",
+
     title: "الابتكار",
     text: "نستثمر في التقنيات الجديدة والمواهب والشراكات التي ستمكننا من تقديم أكبر قيمة لعملائنا. نبني مستقبلًا يعمل فيه الإعلام والتواصل الاستراتيجي بسلاسة معًا لدفع نجاح الأعمال.",
   },
   {
-    number: "-",
+    number: "",
     title: "التأثير",
     text: "من خلال الابتكار المستمر والالتزام بالتميز، نشكّل مستقبل تواصل الشركات واتصالاتها ونموها في عالم رقمي متزايد.",
   },
@@ -118,9 +118,7 @@ export default function VisionSection() {
         className="pointer-events-none absolute inset-0 -z-10"
       >
         <div className="absolute left-1/2 top-[5%] h-125 w-125 -translate-x-1/2 rounded-full bg-cyan-400/[0.035] blur-[150px]" />
-
         <div className="absolute bottom-[10%] right-[-10%] h-100 w-100 rounded-full bg-blue-500/2.5 blur-[140px]" />
-
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-size-[80px_80px] opacity-40 mask-[linear-gradient(to_bottom,black,transparent_80%)]" />
       </div>
 
@@ -151,7 +149,7 @@ export default function VisionSection() {
               id="vision-heading"
               className="text-6xl font-bold leading-none tracking-tighter sm:text-7xl md:text-8xl lg:text-[8rem]"
             >
-              رؤيتنا
+              بيان رؤيتنا
             </h2>
 
             <p className="mx-auto mt-7 max-w-2xl text-base font-medium leading-8 text-white/40 sm:text-lg">
@@ -173,13 +171,6 @@ export default function VisionSection() {
           {...fadeUp(0.15)}
           className="mx-auto mt-24 max-w-4xl text-center sm:mt-28"
         >
-          <h3
-            id="vision-statement-heading"
-            className="text-5xl font-bold leading-tight tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl"
-          >
-            بيان رؤيتنا
-          </h3>
-
           <p className="mx-auto mt-8 max-w-4xl text-xl font-medium leading-loose text-white/80 sm:text-2xl sm:leading-[2.05] lg:text-3xl lg:leading-[2.05]">
             أن نكون الشركة{" "}
             <strong className="font-bold text-white">

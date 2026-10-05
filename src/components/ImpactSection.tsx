@@ -242,13 +242,20 @@ export default function ImpactSection() {
                         >
                             كيف نصنع التأثير
                         </motion.h2>
+                        <motion.div
+                            aria-hidden
+                            initial={reduce ? false : { scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, ease: EASE, delay: 0.15 }}
+                            className="my-10 h-px w-40 origin-right bg-cyan-300/70"
+                        />
 
                         <motion.h3
                             {...reveal(0.1, { duration: 0.7 })}
                             className="max-w-3xl text-3xl font-bold leading-normal text-white sm:text-4xl lg:text-[3.25rem] lg:leading-[1.45]"
                         >
-                            حلول إعلامية واتصالية تُبنى بعناية لتعزيز الحضور وقيادة الصورة
-                            الذهنية لصناعة تأثير طويل المدى
+                            حلول إعلامية واتصالية تُبنى بعناية لتعزيز الحضور وقيادة الصورة الذهنية لصناعة تأثير طويل المدى.
                         </motion.h3>
                     </div>
 
@@ -273,8 +280,7 @@ export default function ImpactSection() {
                         >
                             <article
                                 tabIndex={0}
-                                className={`group flex h-full min-h-55 flex-col justify-between bg-[#080711] p-6 transition-all duration-400 ease-out
-                hover:-translate-y-1.25 hover:bg-[#10101a] focus-visible:-translate-y-1.25 focus-visible:bg-[#10101a] ${focusRing}`}
+                                className={`group flex h-full min-h-55 flex-col justify-between bg-[#080711] p-6 transition-all duration-400 ease-out hover:-translate-y-1.25 hover:bg-[#10101a] focus-visible:-translate-y-1.25 focus-visible:bg-[#10101a] ${focusRing}`}
                             >
                                 <div className="flex items-start justify-between">
                                     <span className="text-sm font-medium tabular-nums text-white/30 transition-colors duration-400 group-hover:text-cyan-300 group-focus-visible:text-cyan-300">
@@ -302,9 +308,9 @@ export default function ImpactSection() {
                     <div className="lg:col-span-8">
                         <motion.h2
                             {...reveal(0)}
-                            className="text-2xl font-semibold leading-snug text-white/50 sm:text-3xl"
+                            className="mb-8 text-sm font-medium text-cyan-300/90"
                         >
-                            ما الذي يجعل تأثيرنا مختلفًا؟
+                            ما الذى يجعل تأثيرنا مختلفاً ؟
                         </motion.h2>
 
                         <motion.div
@@ -316,29 +322,12 @@ export default function ImpactSection() {
                             className="my-10 h-px w-40 origin-right bg-cyan-300/70"
                         />
 
-                        <p className="text-4xl font-bold leading-[1.45] text-white sm:text-5xl lg:text-[4.25rem] lg:leading-[1.4]">
-                            {[
-                                "نبني استراتيجيات اتصال وإعلام",
-                                "ترتبط بالأثر الحقيقي،",
-                                "لا بمجرد الظهور.",
-                            ].map((line, i) => (
-                                <span key={line} className="block overflow-hidden pb-1">
-                                    <motion.span
-                                        className="block"
-                                        initial={reduce ? false : { y: "100%" }}
-                                        whileInView={{ y: 0 }}
-                                        viewport={{ once: true, margin: "-60px" }}
-                                        transition={{
-                                            duration: 0.7,
-                                            delay: 0.2 + i * 0.14,
-                                            ease: EASE,
-                                        }}
-                                    >
-                                        {line}
-                                    </motion.span>
-                                </span>
-                            ))}
-                        </p>
+                        <motion.h3
+                            {...reveal(0.1, { duration: 0.7 })}
+                            className="max-w-3xl text-3xl font-bold leading-normal text-white sm:text-4xl lg:text-[3.25rem] lg:leading-[1.45]"
+                        >
+                            نبني استراتيجيات اتصال وإعلام ترتبط بالأثر الحقيقي، لا بمجرد الظهور.
+                        </motion.h3>
                     </div>
 
                     <motion.div
