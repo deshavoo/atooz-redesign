@@ -22,9 +22,45 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
-      <body className={`${alexandria.variable}`}>{children}
+    <html
+      lang="ar"
+      dir="rtl"
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                            (() => {
+                                try {
+                                    const savedTheme =
+                                        localStorage.getItem("theme");
+
+                                    if (savedTheme === "light") {
+                                        document.documentElement.classList.remove(
+                                            "dark"
+                                        );
+                                    } else {
+                                        document.documentElement.classList.add(
+                                            "dark"
+                                        );
+                                    }
+                                } catch {
+                                    document.documentElement.classList.add(
+                                        "dark"
+                                    );
+                                }
+                            })();
+                        `,
+          }}
+        />
+      </head>
+
+      <body
+        className={`${alexandria.variable} bg-white text-[#111827] transition-colors duration-700 dark:bg-[#080a13] dark:text-white`}
+      >
         <CustomCursor />
+        {children}
       </body>
     </html>
   );

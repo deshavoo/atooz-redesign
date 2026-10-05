@@ -135,6 +135,7 @@ const processSteps = [
 ];
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
+
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 function useReveal() {
@@ -142,17 +143,32 @@ function useReveal() {
 
     return (
         delay = 0,
-        opts: { y?: number; scale?: number; duration?: number } = {}
+        opts: { y?: number; scale?: number; duration?: number } = {},
     ) => {
         if (reduce) return { initial: false as const };
 
-        const { y = 25, scale = 1, duration = 0.65 } = opts;
+        const {
+            y = 25,
+            scale = 1,
+            duration = 0.65,
+        } = opts;
 
         return {
             initial: { opacity: 0, y, scale },
-            whileInView: { opacity: 1, y: 0, scale: 1 },
-            viewport: { once: true, margin: "-60px" },
-            transition: { duration, delay, ease: EASE },
+            whileInView: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+            },
+            viewport: {
+                once: true,
+                margin: "-60px",
+            },
+            transition: {
+                duration,
+                delay,
+                ease: EASE,
+            },
         };
     };
 }
@@ -164,17 +180,21 @@ function IconBox({
     icon: LucideIcon;
     size?: "md" | "lg";
 }) {
-    const dim = size === "lg" ? "h-14 w-14" : "h-11 w-11";
+    const dim =
+        size === "lg"
+            ? "h-14 w-14"
+            : "h-11 w-11";
 
     return (
         <span
-            className={`${dim} inline-flex shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/3 text-white/60
-      transition-all duration-400 ease-out
-      group-hover:-translate-x-0.5 group-hover:rotate-[8deg] group-hover:scale-[1.08] group-hover:border-cyan-300/40 group-hover:bg-cyan-300/10 group-hover:text-cyan-300
-      group-focus-visible:rotate-[8deg] group-focus-visible:scale-[1.08] group-focus-visible:border-cyan-300/40 group-focus-visible:bg-cyan-300/10 group-focus-visible:text-cyan-300`}
+            className={`${dim} inline-flex shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/3 text-white/60 transition-all duration-400 ease-out group-hover:-translate-x-0.5 group-hover:rotate-[8deg] group-hover:scale-[1.08] group-hover:border-cyan-300/40 group-hover:bg-cyan-300/10 group-hover:text-cyan-300 group-focus-visible:rotate-[8deg] group-focus-visible:scale-[1.08] group-focus-visible:border-cyan-300/40 group-focus-visible:bg-cyan-300/10 group-focus-visible:text-cyan-300 light:border-black/10 light:bg-black/3 light:text-black/45 light:group-hover:border-cyan-600/35 light:group-hover:bg-cyan-600/8 light:group-hover:text-cyan-700 light:group-focus-visible:border-cyan-600/35 light:group-focus-visible:bg-cyan-600/8 light:group-focus-visible:text-cyan-700`}
         >
             <Icon
-                className={size === "lg" ? "h-6 w-6" : "h-5 w-5"}
+                className={
+                    size === "lg"
+                        ? "h-6 w-6"
+                        : "h-5 w-5"
+                }
                 strokeWidth={1.5}
                 aria-hidden
             />
@@ -182,11 +202,15 @@ function IconBox({
     );
 }
 
-function AccentLine({ className = "" }: { className?: string }) {
+function AccentLine({
+    className = "",
+}: {
+    className?: string;
+}) {
     return (
         <span
             aria-hidden
-            className={`block h-px w-5 bg-cyan-300 opacity-40 transition-all duration-400 ease-out group-hover:w-11.25 group-hover:opacity-100 group-focus-visible:w-11.25 group-focus-visible:opacity-100 ${className}`}
+            className={`block h-px w-5 bg-cyan-300 opacity-40 transition-all duration-400 ease-out group-hover:w-11.25 group-hover:opacity-100 group-focus-visible:w-11.25 group-focus-visible:opacity-100 light:bg-cyan-600 ${className}`}
         />
     );
 }
@@ -202,7 +226,7 @@ function GifFrame({
 }) {
     return (
         <div
-            className={`relative overflow-hidden border border-white/10 bg-[#10101a] ${className}`}
+            className={`relative overflow-hidden border border-white/10 bg-[#10101a] light:border-black/10 light:bg-[#e8ebf0] ${className}`}
             aria-hidden="true"
         >
             <Image
@@ -219,7 +243,7 @@ function GifFrame({
 }
 
 const focusRing =
-    "outline-none focus-visible:ring-1 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#080711]";
+    "outline-none focus-visible:ring-1 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#080711] light:focus-visible:ring-cyan-600/60 light:focus-visible:ring-offset-[#f5f7fa]";
 
 export default function ImpactSection() {
     const reveal = useReveal();
@@ -228,8 +252,12 @@ export default function ImpactSection() {
     return (
         <div
             dir="rtl"
-            className="overflow-x-hidden bg-[#080711] font-[Cairo,sans-serif] text-white"
+            className="overflow-x-hidden bg-[#080711] font-[Cairo,sans-serif] text-white light:bg-[#f5f7fa] light:text-[#10131a]"
         >
+            {/* =====================================================
+                SECTION 01 — HOW WE CREATE IMPACT
+            ====================================================== */}
+
             <section
                 id="impact"
                 className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-40"
@@ -238,29 +266,43 @@ export default function ImpactSection() {
                     <div className="lg:col-span-7">
                         <motion.h2
                             {...reveal(0)}
-                            className="mb-8 text-sm font-medium text-cyan-300/90"
+                            className="mb-8 text-sm font-medium text-cyan-300/90 light:text-cyan-700"
                         >
                             كيف نصنع التأثير
                         </motion.h2>
+
                         <motion.div
                             aria-hidden
-                            initial={reduce ? false : { scaleX: 0 }}
+                            initial={
+                                reduce
+                                    ? false
+                                    : { scaleX: 0 }
+                            }
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 1, ease: EASE, delay: 0.15 }}
-                            className="my-10 h-px w-40 origin-right bg-cyan-300/70"
+                            transition={{
+                                duration: 1,
+                                ease: EASE,
+                                delay: 0.15,
+                            }}
+                            className="my-10 h-px w-40 origin-right bg-cyan-300/70 light:bg-cyan-600/60"
                         />
 
                         <motion.h3
-                            {...reveal(0.1, { duration: 0.7 })}
-                            className="max-w-3xl text-3xl font-bold leading-normal text-white sm:text-4xl lg:text-[3.25rem] lg:leading-[1.45]"
+                            {...reveal(0.1, {
+                                duration: 0.7,
+                            })}
+                            className="max-w-3xl text-3xl font-bold leading-normal text-white sm:text-4xl lg:text-[3.25rem] lg:leading-[1.45] light:text-[#10131a]"
                         >
                             حلول إعلامية واتصالية تُبنى بعناية لتعزيز الحضور وقيادة الصورة الذهنية لصناعة تأثير طويل المدى.
                         </motion.h3>
                     </div>
 
                     <motion.div
-                        {...reveal(0.2, { scale: 0.98, duration: 0.7 })}
+                        {...reveal(0.2, {
+                            scale: 0.98,
+                            duration: 0.7,
+                        })}
                         className="lg:col-span-5"
                     >
                         <GifFrame
@@ -271,67 +313,92 @@ export default function ImpactSection() {
                     </motion.div>
                 </div>
 
-                <ul className="mt-24 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/5 bg-white/5 sm:grid-cols-2 lg:mt-32 lg:grid-cols-5">
-                    {impactServices.map(({ title, icon }, i) => (
-                        <motion.li
-                            key={title}
-                            {...reveal(i * 0.09, { scale: 0.98, duration: 0.6 })}
-                            className="bg-[#080711]"
-                        >
-                            <article
-                                tabIndex={0}
-                                className={`group flex h-full min-h-55 flex-col justify-between bg-[#080711] p-6 transition-all duration-400 ease-out hover:-translate-y-1.25 hover:bg-[#10101a] focus-visible:-translate-y-1.25 focus-visible:bg-[#10101a] ${focusRing}`}
+                <ul className="mt-24 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/5 bg-white/5 sm:grid-cols-2 lg:mt-32 lg:grid-cols-5 light:border-black/8 light:bg-black/8">
+                    {impactServices.map(
+                        ({ title, icon }, i) => (
+                            <motion.li
+                                key={title}
+                                {...reveal(
+                                    i * 0.09,
+                                    {
+                                        scale: 0.98,
+                                        duration: 0.6,
+                                    },
+                                )}
+                                className="bg-[#080711] light:bg-[#f5f7fa]"
                             >
-                                <div className="flex items-start justify-between">
-                                    <span className="text-sm font-medium tabular-nums text-white/30 transition-colors duration-400 group-hover:text-cyan-300 group-focus-visible:text-cyan-300">
-                                        {pad(i)}
-                                    </span>
+                                <article
+                                    tabIndex={0}
+                                    className={`group flex h-full min-h-55 flex-col justify-between bg-[#080711] p-6 transition-all duration-400 ease-out hover:-translate-y-1.25 hover:bg-[#10101a] focus-visible:-translate-y-1.25 focus-visible:bg-[#10101a] light:bg-[#f5f7fa] light:hover:bg-[#ffffff] light:focus-visible:bg-[#ffffff] ${focusRing}`}
+                                >
+                                    <div className="flex items-start justify-between">
+                                        <span className="text-sm font-medium tabular-nums text-white/30 transition-colors duration-400 group-hover:text-cyan-300 group-focus-visible:text-cyan-300 light:text-black/30 light:group-hover:text-cyan-700 light:group-focus-visible:text-cyan-700">
+                                            {pad(i)}
+                                        </span>
 
-                                    <IconBox icon={icon} />
-                                </div>
+                                        <IconBox icon={icon} />
+                                    </div>
 
-                                <div>
-                                    <h3 className="mb-5 text-lg font-semibold leading-snug text-white/70 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white">
-                                        {title}
-                                    </h3>
+                                    <div>
+                                        <h3 className="mb-5 text-lg font-semibold leading-snug text-white/70 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white light:text-[#10131a]/70 light:group-hover:text-[#10131a] light:group-focus-visible:text-[#10131a]">
+                                            {title}
+                                        </h3>
 
-                                    <AccentLine />
-                                </div>
-                            </article>
-                        </motion.li>
-                    ))}
+                                        <AccentLine />
+                                    </div>
+                                </article>
+                            </motion.li>
+                        ),
+                    )}
                 </ul>
             </section>
 
-            <section className="border-t border-white/5 bg-[#10101a]/60">
+            {/* =====================================================
+                SECTION 02 — WHAT MAKES OUR IMPACT DIFFERENT
+            ====================================================== */}
+
+            <section className="border-t border-white/5 bg-[#10101a]/60 light:border-black/8 light:bg-[#e9ecf1]/70">
                 <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:py-44">
                     <div className="lg:col-span-8">
                         <motion.h2
                             {...reveal(0)}
-                            className="mb-8 text-sm font-medium text-cyan-300/90"
+                            className="mb-8 text-sm font-medium text-cyan-300/90 light:text-cyan-700"
                         >
                             ما الذى يجعل تأثيرنا مختلفاً ؟
                         </motion.h2>
 
                         <motion.div
                             aria-hidden
-                            initial={reduce ? false : { scaleX: 0 }}
+                            initial={
+                                reduce
+                                    ? false
+                                    : { scaleX: 0 }
+                            }
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 1, ease: EASE, delay: 0.15 }}
-                            className="my-10 h-px w-40 origin-right bg-cyan-300/70"
+                            transition={{
+                                duration: 1,
+                                ease: EASE,
+                                delay: 0.15,
+                            }}
+                            className="my-10 h-px w-40 origin-right bg-cyan-300/70 light:bg-cyan-600/60"
                         />
 
                         <motion.h3
-                            {...reveal(0.1, { duration: 0.7 })}
-                            className="max-w-3xl text-3xl font-bold leading-normal text-white sm:text-4xl lg:text-[3.25rem] lg:leading-[1.45]"
+                            {...reveal(0.1, {
+                                duration: 0.7,
+                            })}
+                            className="max-w-3xl text-3xl font-bold leading-normal text-white sm:text-4xl lg:text-[3.25rem] lg:leading-[1.45] light:text-[#10131a]"
                         >
                             نبني استراتيجيات اتصال وإعلام ترتبط بالأثر الحقيقي، لا بمجرد الظهور.
                         </motion.h3>
                     </div>
 
                     <motion.div
-                        {...reveal(0.2, { scale: 0.98, duration: 0.7 })}
+                        {...reveal(0.2, {
+                            scale: 0.98,
+                            duration: 0.7,
+                        })}
                         className="lg:col-span-4"
                     >
                         <GifFrame
@@ -342,171 +409,213 @@ export default function ImpactSection() {
                 </div>
             </section>
 
+            {/* =====================================================
+                SECTION 03 — OUTCOMES
+            ====================================================== */}
+
             <section className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-40">
                 <div className="grid gap-16 lg:grid-cols-12 lg:gap-12">
                     <div className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
                         <motion.h2
                             {...reveal(0)}
-                            className="mb-6 text-3xl font-bold leading-snug sm:text-4xl"
+                            className="mb-6 text-3xl font-bold leading-snug sm:text-4xl light:text-[#10131a]"
                         >
                             ما الذي نصنعه خلف كل حضور ناجح؟
                         </motion.h2>
 
                         <motion.p
                             {...reveal(0.1)}
-                            className="max-w-md text-lg leading-loose text-white/50"
+                            className="max-w-md text-lg leading-loose text-white/50 light:text-[#10131a]/55"
                         >
-                            نساعد الجهات والعلامات على بناء حضور إعلامي يعزز الثقة، ويوضح
-                            الرسالة، ويصنع تأثيرًا طويل المدى.
+                            نساعد الجهات والعلامات على بناء حضور إعلامي يعزز الثقة، ويوضح الرسالة، ويصنع تأثيرًا طويل المدى.
                         </motion.p>
                     </div>
 
                     <div className="lg:col-span-7">
-                        {impactOutcomes.map(({ title, text, icon }, i) => (
-                            <motion.div key={title} {...reveal(i * 0.09)}>
-                                <article
-                                    tabIndex={0}
-                                    className={`group grid grid-cols-[auto_1fr_auto] items-start gap-5 border-t border-white/10 px-2 py-8 transition-all duration-400 ease-out
-                  hover:-translate-x-1.25 hover:bg-white/2 focus-visible:-translate-x-1.25 focus-visible:bg-white/2 sm:gap-8 ${focusRing} ${i === impactOutcomes.length - 1 ? "border-b" : ""
-                                        }`}
+                        {impactOutcomes.map(
+                            ({ title, text, icon }, i) => (
+                                <motion.div
+                                    key={title}
+                                    {...reveal(i * 0.09)}
                                 >
-                                    <span className="pt-1 text-2xl font-light tabular-nums text-white/30 transition-all duration-400 group-hover:-translate-x-1.5 group-hover:text-cyan-300 group-focus-visible:text-cyan-300">
-                                        {pad(i)}
-                                    </span>
+                                    <article
+                                        tabIndex={0}
+                                        className={`group grid grid-cols-[auto_1fr_auto] items-start gap-5 border-t border-white/10 px-2 py-8 transition-all duration-400 ease-out hover:-translate-x-1.25 hover:bg-white/2 focus-visible:-translate-x-1.25 focus-visible:bg-white/2 sm:gap-8 light:border-black/10 light:hover:bg-black/2 light:focus-visible:bg-black/2 ${i ===
+                                            impactOutcomes.length -
+                                            1
+                                            ? "border-b"
+                                            : ""
+                                            } ${focusRing}`}
+                                    >
+                                        <span className="pt-1 text-2xl font-light tabular-nums text-white/30 transition-all duration-400 group-hover:-translate-x-1.5 group-hover:text-cyan-300 group-focus-visible:text-cyan-300 light:text-black/30 light:group-hover:text-cyan-700 light:group-focus-visible:text-cyan-700">
+                                            {pad(i)}
+                                        </span>
 
-                                    <div>
-                                        <h3 className="mb-3 text-xl font-semibold text-white/80 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white">
-                                            {title}
-                                        </h3>
+                                        <div>
+                                            <h3 className="mb-3 text-xl font-semibold text-white/80 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white light:text-[#10131a]/80 light:group-hover:text-[#10131a] light:group-focus-visible:text-[#10131a]">
+                                                {title}
+                                            </h3>
 
-                                        <p className="mb-5 max-w-lg leading-loose text-white/50 transition-colors duration-400 group-hover:text-white/70">
-                                            {text}
-                                        </p>
+                                            <p className="mb-5 max-w-lg leading-loose text-white/50 transition-colors duration-400 group-hover:text-white/70 light:text-[#10131a]/50 light:group-hover:text-[#10131a]/70">
+                                                {text}
+                                            </p>
 
-                                        <AccentLine />
-                                    </div>
+                                            <AccentLine />
+                                        </div>
 
-                                    <IconBox icon={icon} />
-                                </article>
-                            </motion.div>
-                        ))}
+                                        <IconBox icon={icon} />
+                                    </article>
+                                </motion.div>
+                            ),
+                        )}
                     </div>
                 </div>
             </section>
 
-            <section className="border-t border-white/5 bg-[#10101a]/60">
+
+
+            <section className="border-t border-white/5 bg-[#10101a]/60 light:border-black/8 light:bg-[#e9ecf1]/70">
                 <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-40">
                     <div className="mb-16 max-w-3xl lg:mb-24">
                         <motion.h2
                             {...reveal(0)}
-                            className="mb-6 text-3xl font-bold leading-snug sm:text-4xl"
+                            className="mb-6 text-3xl font-bold leading-snug text-white sm:text-4xl light:text-[#10131a]"
                         >
                             حلولنا الاتصالية و الإبداعية
                         </motion.h2>
 
                         <motion.p
                             {...reveal(0.1)}
-                            className="text-lg leading-loose text-white/50"
+                            className="text-lg leading-loose text-white/50 light:text-[#10131a]/55"
                         >
-                            نطوّر حلولًا إعلامية وإبداعية تعزز الحضور وتدعم الصورة الذهنية
-                            للجهات والعلامات
+                            نطوّر حلولًا إعلامية وإبداعية تعزز الحضور وتدعم الصورة الذهنية للجهات والعلامات
                         </motion.p>
                     </div>
 
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-                        {creativeSolutions.map(({ title, text, icon }, i) => (
-                            <motion.div
-                                key={title}
-                                {...reveal(i * 0.09, { scale: 0.98, duration: 0.6 })}
-                            >
-                                <article
-                                    tabIndex={0}
-                                    className={`group relative flex h-full flex-col rounded-3xl border border-white/10 bg-[#171725] p-8 transition-all duration-400 ease-out
-                  hover:-translate-y-1.25 hover:border-white/25 hover:bg-[#1c1c2c] focus-visible:-translate-y-1.25 focus-visible:border-white/25 ${focusRing} lg:p-10`}
+                        {creativeSolutions.map(
+                            ({ title, text, icon }, i) => (
+                                <motion.div
+                                    key={title}
+                                    {...reveal(
+                                        i * 0.09,
+                                        {
+                                            scale: 0.98,
+                                            duration: 0.6,
+                                        },
+                                    )}
                                 >
-                                    <div className="mb-14 flex items-center justify-between">
-                                        <IconBox icon={icon} size="lg" />
+                                    <article
+                                        tabIndex={0}
+                                        className={`group relative flex h-full flex-col rounded-3xl border border-white/10 bg-[#171725] p-8 transition-all duration-400 ease-out hover:-translate-y-1.25 hover:border-white/25 hover:bg-[#1c1c2c] focus-visible:-translate-y-1.25 focus-visible:border-white/25 light:border-black/10 light:bg-white light:hover:border-black/15 light:hover:bg-white light:focus-visible:border-black/15 ${focusRing} lg:p-10`}
+                                    >
+                                        <div className="mb-14 flex items-center justify-between">
+                                            <IconBox
+                                                icon={icon}
+                                                size="lg"
+                                            />
 
-                                        <span className="text-sm tabular-nums text-white/30 transition-colors duration-400 group-hover:text-cyan-300">
-                                            {pad(i)}
-                                        </span>
-                                    </div>
+                                            <span className="text-sm tabular-nums text-white/30 transition-colors duration-400 group-hover:text-cyan-300 light:text-black/30 light:group-hover:text-cyan-700">
+                                                {pad(i)}
+                                            </span>
+                                        </div>
 
-                                    <h3 className="mb-4 text-xl font-semibold text-white/80 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white">
-                                        {title}
-                                    </h3>
+                                        <h3 className="mb-4 text-xl font-semibold text-white/80 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white light:text-[#10131a]/80 light:group-hover:text-[#10131a] light:group-focus-visible:text-[#10131a]">
+                                            {title}
+                                        </h3>
 
-                                    <p className="mb-8 leading-loose text-white/50 transition-colors duration-400 group-hover:text-white/70">
-                                        {text}
-                                    </p>
+                                        <p className="mb-8 leading-loose text-white/50 transition-colors duration-400 group-hover:text-white/70 light:text-[#10131a]/50 light:group-hover:text-[#10131a]/70">
+                                            {text}
+                                        </p>
 
-                                    <AccentLine className="mt-auto" />
-                                </article>
-                            </motion.div>
-                        ))}
+                                        <AccentLine className="mt-auto" />
+                                    </article>
+                                </motion.div>
+                            ),
+                        )}
                     </div>
                 </div>
             </section>
+
 
             <section className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-40">
                 <div className="mb-20 max-w-3xl lg:mb-28">
                     <motion.h2
                         {...reveal(0)}
-                        className="mb-6 text-3xl font-bold leading-snug sm:text-4xl"
+                        className="mb-6 text-3xl font-bold leading-snug sm:text-4xl light:text-[#10131a]"
                     >
                         كيف نبني التأثير
                     </motion.h2>
 
                     <motion.p
                         {...reveal(0.1)}
-                        className="text-lg leading-loose text-white/50"
+                        className="text-lg leading-loose text-white/50 light:text-[#10131a]/55"
                     >
-                        نعمل وفق منهجية تبدأ بفهم الجهة، وتنتهي بحضور إعلامي أكثر قوة
-                        وتأثيرًا داخل السوق.
+                        نعمل وفق منهجية تبدأ بفهم الجهة، وتنتهي بحضور إعلامي أكثر قوة وتأثيرًا داخل السوق.
                     </motion.p>
                 </div>
 
                 <div className="relative">
                     <motion.div
                         aria-hidden
-                        initial={reduce ? false : { scaleX: 0 }}
+                        initial={
+                            reduce
+                                ? false
+                                : { scaleX: 0 }
+                        }
                         whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true, margin: "-80px" }}
-                        transition={{ duration: 1.6, ease: "easeInOut" }}
-                        className="absolute right-0 top-[1.1rem] hidden h-px w-full origin-right bg-linear-to-l from-cyan-300/70 via-white/15 to-white/5 lg:block"
+                        viewport={{
+                            once: true,
+                            margin: "-80px",
+                        }}
+                        transition={{
+                            duration: 1.6,
+                            ease: "easeInOut",
+                        }}
+                        className="absolute right-0 top-[1.1rem] hidden h-px w-full origin-right bg-linear-to-l from-cyan-300/70 via-white/15 to-white/5 light:from-cyan-600/60 light:via-black/10 light:to-black/5 lg:block"
                     />
 
                     <ol className="grid gap-14 lg:grid-cols-4 lg:gap-8">
-                        {processSteps.map(({ title, text }, i) => (
-                            <motion.li
-                                key={title}
-                                {...reveal(0.25 + i * 0.3, { duration: 0.7 })}
-                                className="relative"
-                            >
-                                <article tabIndex={0} className={`group ${focusRing}`}>
-                                    <div className="relative mb-8 flex items-center gap-4">
-                                        <span className="relative z-10 flex h-9 items-center bg-[#080711] pl-4 text-2xl font-light tabular-nums text-white/40 transition-colors duration-400 group-hover:text-cyan-300 group-focus-visible:text-cyan-300">
-                                            {pad(i)}
-                                        </span>
+                        {processSteps.map(
+                            ({ title, text }, i) => (
+                                <motion.li
+                                    key={title}
+                                    {...reveal(
+                                        0.25 + i * 0.3,
+                                        {
+                                            duration: 0.7,
+                                        },
+                                    )}
+                                    className="relative"
+                                >
+                                    <article
+                                        tabIndex={0}
+                                        className={`group ${focusRing}`}
+                                    >
+                                        <div className="relative mb-8 flex items-center gap-4">
+                                            <span className="relative z-10 flex h-9 items-center bg-[#080711] pl-4 text-2xl font-light tabular-nums text-white/40 transition-colors duration-400 group-hover:text-cyan-300 group-focus-visible:text-cyan-300 light:bg-[#f5f7fa] light:text-black/35 light:group-hover:text-cyan-700 light:group-focus-visible:text-cyan-700">
+                                                {pad(i)}
+                                            </span>
 
-                                        <span
-                                            className="h-px flex-1 bg-white/10 lg:hidden"
-                                            aria-hidden
-                                        />
-                                    </div>
+                                            <span
+                                                className="h-px flex-1 bg-white/10 light:bg-black/10 lg:hidden"
+                                                aria-hidden
+                                            />
+                                        </div>
 
-                                    <h3 className="mb-4 text-xl font-semibold text-white/80 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white">
-                                        {title}
-                                    </h3>
+                                        <h3 className="mb-4 text-xl font-semibold text-white/80 transition-colors duration-400 group-hover:text-white group-focus-visible:text-white light:text-[#10131a]/80 light:group-hover:text-[#10131a] light:group-focus-visible:text-[#10131a]">
+                                            {title}
+                                        </h3>
 
-                                    <p className="mb-6 leading-loose text-white/50 transition-colors duration-400 group-hover:text-white/70">
-                                        {text}
-                                    </p>
+                                        <p className="mb-6 leading-loose text-white/50 transition-colors duration-400 group-hover:text-white/70 light:text-[#10131a]/50 light:group-hover:text-[#10131a]/70">
+                                            {text}
+                                        </p>
 
-                                    <AccentLine />
-                                </article>
-                            </motion.li>
-                        ))}
+                                        <AccentLine />
+                                    </article>
+                                </motion.li>
+                            ),
+                        )}
                     </ol>
                 </div>
             </section>

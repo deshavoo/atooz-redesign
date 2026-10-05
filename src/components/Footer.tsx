@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+
 import { motion, useReducedMotion } from "motion/react";
+
 import { ArrowUpLeft, Mail, MapPin, Phone } from "lucide-react";
+
 import {
   FaBehance,
   FaFacebookF,
@@ -64,7 +67,7 @@ const techStack = [
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const ring =
-  "outline-none focus-visible:ring-1 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#080711] rounded-sm";
+  "outline-none focus-visible:ring-1 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#080711] rounded-sm light:focus-visible:ring-cyan-600/60 light:focus-visible:ring-offset-[#f5f7fa]";
 
 export default function Footer() {
   const reduce = useReducedMotion();
@@ -97,7 +100,7 @@ export default function Footer() {
 
           <span
             aria-hidden="true"
-            className="mx-5 text-cyan-400/30"
+            className="mx-5 text-cyan-400/30 light:text-cyan-700/25"
           >
             •
           </span>
@@ -109,38 +112,39 @@ export default function Footer() {
   return (
     <footer
       dir="rtl"
-      className="relative overflow-hidden border-t border-white/10 bg-[#080711] font-[Cairo,sans-serif] text-white"
+      className="relative overflow-hidden border-t border-white/10 bg-[#080711] font-[Cairo,sans-serif] text-white light:border-black/8 light:bg-[#f5f7fa] light:text-[#10131a]"
     >
       <style>{`
-        @keyframes a2z-marquee {
-          0% {
-            transform: translate3d(0, 0, 0);
-          }
-          100% {
-            transform: translate3d(-50%, 0, 0);
-          }
-        }
+                @keyframes a2z-marquee {
+                    0% {
+                        transform: translate3d(0, 0, 0);
+                    }
 
-        .a2z-marquee-track {
-          animation: a2z-marquee 35s linear infinite;
-          will-change: transform;
-        }
+                    100% {
+                        transform: translate3d(-50%, 0, 0);
+                    }
+                }
 
-        .a2z-marquee-track:hover {
-          animation-play-state: paused;
-        }
+                .a2z-marquee-track {
+                    animation: a2z-marquee 35s linear infinite;
+                    will-change: transform;
+                }
 
-        @media (prefers-reduced-motion: reduce) {
-          .a2z-marquee-track {
-            animation: none;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-      `}</style>
+                .a2z-marquee-track:hover {
+                    animation-play-state: paused;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .a2z-marquee-track {
+                        animation: none;
+                        transform: translate3d(0, 0, 0);
+                    }
+                }
+            `}</style>
 
       <span
         aria-hidden="true"
-        className="absolute right-6 top-0 h-px w-20 bg-cyan-300/60 lg:right-10"
+        className="absolute right-6 top-0 h-px w-20 bg-cyan-300/60 light:bg-cyan-600/60 lg:right-10"
       />
 
       <div className="mx-auto max-w-7xl px-6 pb-5 pt-10 lg:px-10 lg:pb-6 lg:pt-12">
@@ -156,7 +160,7 @@ export default function Footer() {
             >
               <div className="flex h-12 w-36 items-center">
                 <Image
-                  src="/logo-01.png"
+                  src="/images/logo/logo-01.png"
                   alt="A2Z Media Hub"
                   width={144}
                   height={48}
@@ -166,13 +170,13 @@ export default function Footer() {
               </div>
             </Link>
 
-            <p className="mt-5 max-w-sm text-sm leading-7 text-white/45 sm:text-base">
+            <p className="mt-5 max-w-sm text-sm leading-7 text-white/45 sm:text-base light:text-[#10131a]/50">
               حلول إعلامية واتصالية تصنع تأثيرًا طويل المدى.
             </p>
 
             <Link
               href="#contact"
-              className={`group mt-6 inline-flex items-center gap-3 border-b border-cyan-300/35 pb-2 text-sm font-semibold text-white transition-colors duration-300 hover:border-cyan-300 hover:text-cyan-300 sm:text-base ${ring}`}
+              className={`group mt-6 inline-flex items-center gap-3 border-b border-cyan-300/35 pb-2 text-sm font-semibold text-white transition-colors duration-300 hover:border-cyan-300 hover:text-cyan-300 sm:text-base light:border-cyan-600/35 light:text-[#10131a] light:hover:border-cyan-600 light:hover:text-cyan-700 ${ring}`}
             >
               ابدأ مشروعك معنا
 
@@ -184,13 +188,12 @@ export default function Footer() {
             </Link>
           </motion.div>
 
-
           <motion.nav
             {...reveal(0.08)}
             aria-label="روابط التذييل"
             className="lg:col-span-3"
           >
-            <h2 className="mb-5 text-xs font-medium text-white/25">
+            <h2 className="mb-5 text-xs font-medium text-white/25 light:text-[#10131a]/35">
               استكشف
             </h2>
 
@@ -199,9 +202,9 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className={`group inline-flex items-center gap-2 text-sm text-white/45 transition-all duration-300 hover:-translate-x-1 hover:text-white focus-visible:-translate-x-1 focus-visible:text-white sm:text-[15px] ${ring}`}
+                    className={`group inline-flex items-center gap-2 text-sm text-white/45 transition-all duration-300 hover:-translate-x-1 hover:text-white focus-visible:-translate-x-1 focus-visible:text-white sm:text-[15px] light:text-[#10131a]/55 light:hover:text-[#10131a] light:focus-visible:text-[#10131a] ${ring}`}
                   >
-                    <span className="h-px w-0 bg-cyan-300 transition-all duration-300 group-hover:w-3" />
+                    <span className="h-px w-0 bg-cyan-300 transition-all duration-300 group-hover:w-3 light:bg-cyan-600" />
 
                     {link.label}
                   </Link>
@@ -210,21 +213,20 @@ export default function Footer() {
             </ul>
           </motion.nav>
 
-
           <motion.div
             {...reveal(0.16)}
             className="lg:col-span-4"
           >
-            <h2 className="mb-5 text-xs font-medium text-white/25">
+            <h2 className="mb-5 text-xs font-medium text-white/25 light:text-[#10131a]/35">
               تواصل معنا
             </h2>
 
-            <ul className="grid gap-3.5 text-sm text-white/45">
-              <li className="group flex items-start gap-3.5 transition-colors duration-300 hover:text-white">
+            <ul className="grid gap-3.5 text-sm text-white/45 light:text-[#10131a]/55">
+              <li className="group flex items-start gap-3.5 transition-colors duration-300 hover:text-white light:hover:text-[#10131a]">
                 <MapPin
                   aria-hidden="true"
                   strokeWidth={1.5}
-                  className="mt-0.5 h-4 w-4 shrink-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-cyan-300"
+                  className="mt-0.5 h-4 w-4 shrink-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-cyan-300 light:group-hover:text-cyan-700"
                 />
 
                 <address className="not-italic">
@@ -236,13 +238,13 @@ export default function Footer() {
                 <Mail
                   aria-hidden="true"
                   strokeWidth={1.5}
-                  className="h-4 w-4 shrink-0 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-cyan-300"
+                  className="h-4 w-4 shrink-0 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-cyan-300 light:group-hover:text-cyan-700"
                 />
 
                 <a
                   href={`mailto:${CONTACT.email}`}
                   dir="ltr"
-                  className={`transition-colors duration-300 hover:text-white focus-visible:text-white ${ring}`}
+                  className={`transition-colors duration-300 hover:text-white focus-visible:text-white light:hover:text-[#10131a] light:focus-visible:text-[#10131a] ${ring}`}
                 >
                   {CONTACT.email}
                 </a>
@@ -252,72 +254,72 @@ export default function Footer() {
                 <Phone
                   aria-hidden="true"
                   strokeWidth={1.5}
-                  className="h-4 w-4 shrink-0 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-cyan-300"
+                  className="h-4 w-4 shrink-0 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-cyan-300 light:group-hover:text-cyan-700"
                 />
 
                 <a
                   href={CONTACT.phoneHref}
                   dir="ltr"
-                  className={`transition-colors duration-300 hover:text-white focus-visible:text-white ${ring}`}
+                  className={`transition-colors duration-300 hover:text-white focus-visible:text-white light:hover:text-[#10131a] light:focus-visible:text-[#10131a] ${ring}`}
                 >
                   {CONTACT.phone}
                 </a>
               </li>
             </ul>
 
-
             <div className="mt-6 flex items-center gap-2.5">
-              {socials.map(({ label, href, icon: Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className={`group/social inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/2 text-white/40 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-cyan-300/6 hover:text-cyan-300 hover:shadow-[0_8px_25px_rgba(34,211,238,0.08)] focus-visible:-translate-y-1 focus-visible:border-cyan-300/30 focus-visible:text-cyan-300 ${ring}`}
-                >
-                  <Icon
-                    aria-hidden="true"
-                    className="h-4 w-4 transition-transform duration-500 group-hover/social:rotate-45 group-focus-visible/social:rotate-45"
-                  />
-                </a>
-              ))}
+              {socials.map(
+                ({
+                  label,
+                  href,
+                  icon: Icon,
+                }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className={`group/social inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/2 text-white/40 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-cyan-300/6 hover:text-cyan-300 hover:shadow-[0_8px_25px_rgba(34,211,238,0.08)] focus-visible:-translate-y-1 focus-visible:border-cyan-300/30 focus-visible:text-cyan-300 light:border-black/10 light:bg-black/2.5 light:text-[#10131a]/45 light:hover:border-cyan-600/30 light:hover:bg-cyan-600/8 light:hover:text-cyan-700 light:hover:shadow-[0_8px_25px_rgba(8,145,178,0.08)] light:focus-visible:border-cyan-600/30 light:focus-visible:text-cyan-700 ${ring}`}
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="h-4 w-4 transition-transform duration-500 group-hover/social:rotate-45 group-focus-visible/social:rotate-45"
+                    />
+                  </a>
+                ),
+              )}
             </div>
           </motion.div>
         </div>
 
-
         <motion.div
           {...reveal(0.08, 0)}
-          className="mt-8 border-t border-white/5 pt-5"
+          className="mt-8 border-t border-white/5 pt-5 light:border-black/8"
         >
           <div
             dir="ltr"
-            className="relative overflow-hidden select-none"
+            className="relative select-none overflow-hidden"
           >
-
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-[#080711] via-[#080711]/80 to-transparent sm:w-28"
-            />
-
-
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-[#080711] via-[#080711]/80 to-transparent sm:w-28"
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-[#080711] via-[#080711]/80 to-transparent sm:w-28 light:from-[#f5f7fa] light:via-[#f5f7fa]/80"
             />
 
             <div
               aria-hidden="true"
-              className="overflow-hidden text-[10px] text-white/20 sm:text-xs"
+              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-[#080711] via-[#080711]/80 to-transparent sm:w-28 light:from-[#f5f7fa] light:via-[#f5f7fa]/80"
+            />
+
+            <div
+              aria-hidden="true"
+              className="overflow-hidden text-[10px] text-white/20 sm:text-xs light:text-[#10131a]/20"
             >
               <div className="a2z-marquee-track flex w-max">
-
                 <div className="flex shrink-0 items-center">
                   {marqueeGroup}
                   {marqueeGroup}
                 </div>
-
 
                 <div
                   className="flex shrink-0 items-center"
@@ -331,10 +333,9 @@ export default function Footer() {
           </div>
         </motion.div>
 
-
         <motion.div
           {...reveal(0.12, 0)}
-          className="mt-5 flex flex-col gap-2 border-t border-white/5 pt-4 text-[10px] text-white/25 sm:flex-row sm:items-center sm:justify-between sm:text-xs"
+          className="mt-5 flex flex-col gap-2 border-t border-white/5 pt-4 text-[10px] text-white/25 sm:flex-row sm:items-center sm:justify-between sm:text-xs light:border-black/8 light:text-[#10131a]/35"
         >
           <p
             dir="ltr"
@@ -352,9 +353,9 @@ export default function Footer() {
               href={DEV_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={`underline decoration-transparent underline-offset-4 transition-all duration-300 hover:text-cyan-300 hover:decoration-cyan-300/60 focus-visible:text-cyan-300 ${ring}`}
+              className={`underline decoration-transparent underline-offset-4 transition-all duration-300 hover:text-cyan-300 hover:decoration-cyan-300/60 focus-visible:text-cyan-300 light:hover:text-cyan-700 light:hover:decoration-cyan-600/60 light:focus-visible:text-cyan-700 ${ring}`}
             >
-              Deshavoo.{""} and alot of coffee ☕
+              Deshavoo. and alot of coffee ☕
             </a>
           </p>
         </motion.div>

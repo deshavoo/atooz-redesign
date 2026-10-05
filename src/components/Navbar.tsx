@@ -3,8 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import {
+    memo,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
+
 import { ArrowUpLeft, Menu, X } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 interface NavItem {
     readonly label: string;
@@ -62,6 +70,7 @@ const SOCIAL_LINKS: readonly SocialLink[] = [
 ];
 
 const SCROLL_THRESHOLD = 30;
+
 const DESKTOP_QUERY = "(min-width: 1024px)";
 
 const FOCUS_RING =
@@ -81,6 +90,8 @@ const getActiveHref = () => {
     return `/#${hash.slice(1)}`;
 };
 
+
+
 const SocialLinks = memo(function SocialLinks() {
     return (
         <ul className="flex items-center gap-1.5">
@@ -91,12 +102,14 @@ const SocialLinks = memo(function SocialLinks() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${label} (يفتح في نافذة جديدة)`}
-                        className={`group flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#29253d] shadow-sm transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[#5b58c6] hover:text-white hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${FOCUS_RING}`}
+                        className={`group flex h-9 w-9 items-center justify-center rounded-full bg-[#17171f] text-white shadow-sm transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[#5b58c6] hover:text-white hover:shadow-md dark:bg-white dark:text-[#29253d] motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${FOCUS_RING}`}
                     >
                         <span
                             aria-hidden="true"
                             dir="ltr"
-                            className={`font-bold transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-360 motion-reduce:transition-none ${glyph.length > 1 ? "text-[11px]" : "text-[15px]"
+                            className={`font-bold transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-360 motion-reduce:transition-none ${glyph.length > 1
+                                ? "text-[11px]"
+                                : "text-[15px]"
                                 }`}
                         >
                             {glyph}
@@ -107,6 +120,8 @@ const SocialLinks = memo(function SocialLinks() {
         </ul>
     );
 });
+
+
 
 const MobileMenu = memo(function MobileMenu({
     isOpen,
@@ -120,14 +135,16 @@ const MobileMenu = memo(function MobileMenu({
             <div
                 aria-hidden="true"
                 onClick={onClose}
-                className={`fixed inset-0 z-0 bg-[#17152a]/10 backdrop-blur-[2px] transition-[opacity,visibility] duration-300 motion-reduce:transition-none ${isOpen ? "visible opacity-100" : "invisible opacity-0"
+                className={`fixed inset-0 z-0 bg-black/20 backdrop-blur-[2px] transition-[opacity,visibility] duration-300 motion-reduce:transition-none ${isOpen
+                    ? "visible opacity-100"
+                    : "invisible opacity-0"
                     }`}
             />
 
             <nav
                 id="mobile-menu"
                 aria-label="القائمة الرئيسية للجوال"
-                className={`fixed inset-x-4 top-24 z-10 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain rounded-4xl border border-white/40 bg-[#efeffa]/95 p-4 shadow-[0_20px_60px_rgba(20,15,55,0.22)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out motion-reduce:transition-none sm:inset-x-6 ${isOpen
+                className={`fixed inset-x-4 top-24 z-10 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain rounded-4xl border border-white/10 bg-[#080711]/95 p-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out motion-reduce:transition-none dark:border-white/40 dark:bg-[#efeffa]/95 dark:text-[#29253d] dark:shadow-[0_20px_60px_rgba(20,15,55,0.22)] sm:inset-x-6 ${isOpen
                     ? "visible translate-y-0 scale-100 opacity-100"
                     : "invisible -translate-y-3 scale-[0.98] opacity-0"
                     }`}
@@ -144,8 +161,12 @@ const MobileMenu = memo(function MobileMenu({
                                         onNavigate(href);
                                         onClose();
                                     }}
-                                    aria-current={isActive ? "page" : undefined}
-                                    className={`group flex min-h-12 items-center justify-between rounded-xl px-4 text-[15px] font-semibold text-[#29253d] transition-colors duration-200 ${isActive ? "bg-white/65" : "hover:bg-white/50"
+                                    aria-current={
+                                        isActive ? "page" : undefined
+                                    }
+                                    className={`group flex min-h-12 items-center justify-between rounded-xl px-4 text-[15px] font-semibold text-white transition-colors duration-300 dark:text-[#29253d] ${isActive
+                                        ? "bg-white/10 dark:bg-white/65"
+                                        : "hover:bg-white/10 dark:hover:bg-white/50"
                                         } ${FOCUS_RING}`}
                                 >
                                     <span>{label}</span>
@@ -153,7 +174,7 @@ const MobileMenu = memo(function MobileMenu({
                                     <ArrowUpLeft
                                         aria-hidden="true"
                                         size={17}
-                                        className="text-[#29253d]/30 transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:text-[#5b58c6] motion-reduce:transition-none"
+                                        className="text-white/35 transition-[transform,color] duration-300 group-hover:-translate-y-0.5 group-hover:text-cyan-300 dark:text-[#29253d]/30 dark:group-hover:text-[#5b58c6] motion-reduce:transition-none"
                                     />
                                 </Link>
                             </li>
@@ -161,17 +182,19 @@ const MobileMenu = memo(function MobileMenu({
                     })}
                 </ul>
 
-                <hr className="my-3 border-0 border-t border-[#29253d]/10" />
+                <hr className="my-3 border-0 border-t border-white/10 dark:border-[#29253d]/10" />
 
                 <div className="flex items-center gap-2">
                     <SocialLinks />
+
+                    <ThemeToggle />
 
                     <button
                         type="button"
                         lang="en"
                         onClick={onLanguageToggle}
                         aria-label="تغيير اللغة إلى الإنجليزية"
-                        className={`flex h-10 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[11px] font-bold text-[#29253d] shadow-sm transition-colors duration-300 hover:bg-[#5b58c6] hover:text-white ${FOCUS_RING}`}
+                        className={`flex h-10 w-11 shrink-0 items-center justify-center rounded-full bg-[#17171f] text-[11px] font-bold text-white shadow-sm transition-colors duration-300 hover:bg-[#5b58c6] hover:text-white dark:bg-white dark:text-[#29253d] dark:hover:bg-[#5b58c6] ${FOCUS_RING}`}
                     >
                         EN
                     </button>
@@ -192,7 +215,11 @@ const MobileMenu = memo(function MobileMenu({
     );
 });
 
-export default function Navbar({ onLanguageToggle }: NavbarProps) {
+
+
+export default function Navbar({
+    onLanguageToggle,
+}: NavbarProps) {
     const pathname = usePathname();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -200,7 +227,8 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [activeHref, setActiveHref] = useState("/");
 
-    const toggleButtonRef = useRef<HTMLButtonElement>(null);
+    const toggleButtonRef =
+        useRef<HTMLButtonElement>(null);
 
     const closeMenu = useCallback(() => {
         setIsMenuOpen(false);
@@ -211,18 +239,16 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
         setIsMenuOpen((prev) => !prev);
     }, []);
 
-    /**
-     * Updates the active navigation item immediately
-     * when the user clicks a navigation link.
-     */
     const handleNavigate = useCallback((href: string) => {
         setActiveHref(href);
     }, []);
 
-    /* Scroll state */
+
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+            setIsScrolled(
+                window.scrollY > SCROLL_THRESHOLD,
+            );
         };
 
         handleScroll();
@@ -232,11 +258,14 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
         });
 
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener(
+                "scroll",
+                handleScroll,
+            );
         };
     }, []);
 
-    /* Active hash */
+
     useEffect(() => {
         const updateActiveSection = () => {
             setActiveHref(getActiveHref());
@@ -244,14 +273,20 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
 
         updateActiveSection();
 
-        window.addEventListener("hashchange", updateActiveSection);
+        window.addEventListener(
+            "hashchange",
+            updateActiveSection,
+        );
 
         return () => {
-            window.removeEventListener("hashchange", updateActiveSection);
+            window.removeEventListener(
+                "hashchange",
+                updateActiveSection,
+            );
         };
     }, [pathname]);
 
-    /* Mobile menu keyboard / breakpoint */
+
     useEffect(() => {
         if (!isMenuOpen) {
             return;
@@ -264,20 +299,37 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
             }
         };
 
-        const mediaQuery = window.matchMedia(DESKTOP_QUERY);
+        const mediaQuery =
+            window.matchMedia(DESKTOP_QUERY);
 
-        const handleBreakpoint = (event: MediaQueryListEvent) => {
+        const handleBreakpoint = (
+            event: MediaQueryListEvent,
+        ) => {
             if (event.matches) {
                 setIsMenuOpen(false);
             }
         };
 
-        document.addEventListener("keydown", handleKeyDown);
-        mediaQuery.addEventListener("change", handleBreakpoint);
+        document.addEventListener(
+            "keydown",
+            handleKeyDown,
+        );
+
+        mediaQuery.addEventListener(
+            "change",
+            handleBreakpoint,
+        );
 
         return () => {
-            document.removeEventListener("keydown", handleKeyDown);
-            mediaQuery.removeEventListener("change", handleBreakpoint);
+            document.removeEventListener(
+                "keydown",
+                handleKeyDown,
+            );
+
+            mediaQuery.removeEventListener(
+                "change",
+                handleBreakpoint,
+            );
         };
     }, [isMenuOpen]);
 
@@ -289,9 +341,9 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
         >
             <nav
                 aria-label="التنقل الرئيسي"
-                className={`relative z-20 mx-auto flex h-16 max-w-360 items-center gap-3 rounded-2xl border px-3 transition-[background-color,box-shadow,border-color,backdrop-filter] duration-500 ease-out motion-reduce:transition-none sm:h-17 sm:px-5 lg:h-19 lg:gap-5 lg:px-6 xl:px-7 ${isScrolled
-                    ? "border-white/50 bg-[#e6e5f3]/80 shadow-[0_12px_40px_rgba(20,15,55,0.16)] backdrop-blur-xl backdrop-saturate-150"
-                    : "border-black/5 bg-white shadow-[0_10px_35px_rgba(20,15,55,0.10)]"
+                className={`relative z-20 mx-auto flex h-16 max-w-360 items-center gap-3 rounded-2xl border px-3 transition-[background-color,box-shadow,border-color,backdrop-filter,color] duration-500 ease-out motion-reduce:transition-none sm:h-17 sm:px-5 lg:h-19 lg:gap-5 lg:px-6 xl:px-7 ${isScrolled
+                    ? "border-white/10 bg-[#080711]/90 text-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl backdrop-saturate-150 dark:border-white/50 dark:bg-[#e6e5f3]/80 dark:text-[#29253d] dark:shadow-[0_12px_40px_rgba(20,15,55,0.16)]"
+                    : "border-white/10 bg-[#080711] text-white shadow-[0_10px_35px_rgba(0,0,0,0.18)] dark:border-black/5 dark:bg-white dark:text-[#29253d] dark:shadow-[0_10px_35px_rgba(20,15,55,0.10)]"
                     }`}
             >
 
@@ -302,33 +354,53 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
                         handleNavigate("/");
                         closeMenu();
                     }}
-                    className={`flex h-full w-28 shrink-0 items-center rounded-full sm:w-32 lg:w-40 ${FOCUS_RING}`}
+                    className={`relative flex h-full w-28 shrink-0 items-center rounded-full sm:w-32 lg:w-40 ${FOCUS_RING}`}
                 >
                     <Image
-                        src="/images/logo-01.png"
+                        src="/images/logo/logo-01.png"
                         alt="Atooz - حلول إعلامية واقتصادية"
                         width={1014}
                         height={492}
                         sizes="(min-width: 1280px) 160px, (min-width: 1024px) 140px, (min-width: 640px) 128px, 112px"
                         priority
-                        className="h-auto w-full object-contain"
+                        className="h-auto w-full object-contain opacity-100 transition-opacity duration-500 light:opacity-0"
+                    />
+
+                    {/* Light Mode Logo */}
+                    <Image
+                        src="/images/logo/logo-light-v2.png"
+                        alt=""
+                        width={1014}
+                        height={492}
+                        sizes="(min-width: 1280px) 160px, (min-width: 1024px) 140px, (min-width: 640px) 128px, 112px"
+                        priority
+                        aria-hidden="true"
+                        className="absolute inset-0 h-auto w-full object-contain opacity-0 transition-opacity duration-500 light:opacity-100"
                     />
                 </Link>
 
+                {/* Desktop Navigation */}
 
                 <ul className="hidden flex-1 items-center justify-center gap-1 lg:flex">
                     {NAV_ITEMS.map(({ label, href }) => {
-                        const isActive = activeHref === href;
+                        const isActive =
+                            activeHref === href;
 
                         return (
                             <li key={href}>
                                 <Link
                                     href={href}
-                                    onClick={() => handleNavigate(href)}
-                                    aria-current={isActive ? "page" : undefined}
-                                    className={`group relative block rounded-full px-3 py-2.5 text-[13px] font-semibold whitespace-nowrap text-[#29253d] transition-colors duration-300 xl:px-3.5 ${isActive
-                                        ? "bg-white/55 shadow-sm"
-                                        : "hover:bg-[#dfe9ff]/80"
+                                    onClick={() =>
+                                        handleNavigate(href)
+                                    }
+                                    aria-current={
+                                        isActive
+                                            ? "page"
+                                            : undefined
+                                    }
+                                    className={`group relative block rounded-full px-3 py-2.5 text-[13px] font-semibold whitespace-nowrap text-white transition-colors duration-300 dark:text-[#29253d] xl:px-3.5 ${isActive
+                                        ? "bg-white/10 shadow-sm dark:bg-white/55"
+                                        : "hover:bg-white/10 dark:hover:bg-[#dfe9ff]/80"
                                         } ${FOCUS_RING}`}
                                 >
                                     {label}
@@ -346,35 +418,51 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
                     })}
                 </ul>
 
+                {/* Desktop Actions */}
 
                 <div className="hidden shrink-0 items-center gap-2 lg:flex">
                     <SocialLinks />
+
+                    <ThemeToggle />
 
                     <button
                         type="button"
                         lang="en"
                         onClick={onLanguageToggle}
                         aria-label="تغيير اللغة إلى الإنجليزية"
-                        className={`flex h-9 min-w-9 items-center justify-center rounded-full bg-white px-3 text-[11px] font-bold text-[#29253d] shadow-sm transition-colors duration-300 hover:bg-[#5b58c6] hover:text-white ${FOCUS_RING}`}
+                        className={`flex h-9 min-w-9 items-center justify-center rounded-full bg-[#17171f] px-3 text-[11px] font-bold text-white shadow-sm transition-colors duration-300 hover:bg-[#5b58c6] hover:text-white dark:bg-white dark:text-[#29253d] dark:hover:bg-[#5b58c6] ${FOCUS_RING}`}
                     >
                         EN
                     </button>
                 </div>
 
+                {/* Mobile Menu Button */}
 
                 <button
                     ref={toggleButtonRef}
                     type="button"
                     onClick={toggleMenu}
-                    aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
+                    aria-label={
+                        isMenuOpen
+                            ? "إغلاق القائمة"
+                            : "فتح القائمة"
+                    }
                     aria-expanded={isMenuOpen}
                     aria-controls="mobile-menu"
-                    className={`ms-auto flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#29253d] shadow-sm transition-transform duration-300 hover:scale-105 active:scale-95 motion-reduce:transition-none motion-reduce:hover:scale-100 lg:hidden ${FOCUS_RING}`}
+                    className={`ms-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#17171f] text-white shadow-sm transition-transform duration-300 hover:scale-105 hover:bg-[#5b58c6] active:scale-95 motion-reduce:transition-none motion-reduce:hover:scale-100 dark:bg-white dark:text-[#29253d] dark:hover:bg-[#5b58c6] lg:hidden ${FOCUS_RING}`}
                 >
                     {isMenuOpen ? (
-                        <X aria-hidden="true" size={19} strokeWidth={2} />
+                        <X
+                            aria-hidden="true"
+                            size={19}
+                            strokeWidth={2}
+                        />
                     ) : (
-                        <Menu aria-hidden="true" size={19} strokeWidth={2} />
+                        <Menu
+                            aria-hidden="true"
+                            size={19}
+                            strokeWidth={2}
+                        />
                     )}
                 </button>
             </nav>
@@ -391,4 +479,3 @@ export default function Navbar({ onLanguageToggle }: NavbarProps) {
         </header>
     );
 }
-

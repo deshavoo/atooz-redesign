@@ -49,7 +49,6 @@ export default function HeroStats() {
                 1,
             );
 
-
             const eased = 1 - Math.pow(1 - progress, 4);
 
             setValues(
@@ -59,9 +58,12 @@ export default function HeroStats() {
             );
 
             if (progress < 1) {
-                frameId = window.requestAnimationFrame(animate);
+                frameId =
+                    window.requestAnimationFrame(animate);
             } else {
-                setValues(stats.map(({ value }) => value));
+                setValues(
+                    stats.map(({ value }) => value),
+                );
             }
         };
 
@@ -71,7 +73,8 @@ export default function HeroStats() {
             hasStarted = true;
             startedAt = null;
 
-            frameId = window.requestAnimationFrame(animate);
+            frameId =
+                window.requestAnimationFrame(animate);
         };
 
         const observer = new IntersectionObserver(
@@ -106,10 +109,12 @@ export default function HeroStats() {
 
         return () => {
             observer.disconnect();
+
             reduceMotion.removeEventListener(
                 "change",
                 handleMotionPreference,
             );
+
             window.cancelAnimationFrame(frameId);
         };
     }, []);
@@ -119,11 +124,11 @@ export default function HeroStats() {
             ref={containerRef}
             aria-label="أرقام Atooz Media Hub"
             dir="rtl"
-            className="mx-auto grid w-full max-w-3xl grid-cols-3 gap-3 rounded-2xl border border-white/20 bg-white/10 p-3 shadow-[0_18px_50px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:gap-4 sm:p-4"
+            className="mx-auto grid w-full max-w-3xl grid-cols-3 gap-3 rounded-2xl border border-[#10131a]/10 bg-white/65 p-3 shadow-[0_18px_50px_rgba(16,19,26,0.1)] backdrop-blur-xl transition-colors duration-700 dark:border-white/20 dark:bg-white/10 dark:shadow-[0_18px_50px_rgba(0,0,0,0.18)] sm:gap-4 sm:p-4"
         >
             {stats.map(({ value, label }, index) => (
                 <li key={label}>
-                    <div className="group flex min-h-24 flex-col items-center justify-center rounded-xl border border-white/70 bg-white/90 px-3 py-5 text-center shadow-[0_8px_25px_rgba(0,0,0,0.08)] backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-purple-200 hover:bg-white hover:shadow-[0_14px_35px_rgba(119,91,177,0.16)] sm:min-h-28 sm:px-5 sm:py-6">
+                    <div className="group flex min-h-24 flex-col items-center justify-center rounded-xl border border-[#10131a]/10 bg-white/90 px-3 py-5 text-center shadow-[0_8px_25px_rgba(16,19,26,0.08)] backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-purple-200 hover:bg-white hover:shadow-[0_14px_35px_rgba(119,91,177,0.16)] dark:border-white/70 dark:bg-white/90 dark:shadow-[0_8px_25px_rgba(0,0,0,0.08)] dark:hover:border-purple-200 dark:hover:bg-white dark:hover:shadow-[0_14px_35px_rgba(119,91,177,0.16)] sm:min-h-28 sm:px-5 sm:py-6">
                         <span
                             aria-label={`+${value}`}
                             className="bg-linear-to-r from-[#775bb1] to-[#397f91] bg-clip-text text-2xl font-semibold leading-none tracking-tight text-transparent tabular-nums sm:text-3xl"

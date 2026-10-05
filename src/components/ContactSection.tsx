@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
+
 import { motion, useReducedMotion } from "motion/react";
+
 import {
   MapPin,
   Mail,
@@ -39,6 +41,7 @@ const initialValues: FormValues = {
 };
 
 type FormErrors = Partial<Record<keyof FormValues, string>>;
+
 const services = [
   "استراتيجية العلامة التجارية",
   "التسويق الرقمي",
@@ -47,6 +50,7 @@ const services = [
   "التصميم الإبداعي",
   "العلاقات العامة",
 ];
+
 const fields = [
   {
     name: "name",
@@ -84,12 +88,13 @@ const fields = [
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phoneRegex = /^[+\d\s()-]{7,20}$/;
+
 const MAX_MESSAGE = 3000;
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const inputClass =
-  "w-full border-b border-white/10 bg-transparent px-0 py-3 text-base text-white outline-none transition-colors duration-200 placeholder:text-white/25 focus:border-cyan-300/60 aria-[invalid=true]:border-rose-300/50";
+  "w-full border-b border-white/10 bg-transparent px-0 py-3 text-base text-white outline-none transition-colors duration-200 placeholder:text-white/25 focus:border-cyan-300/60 aria-[invalid=true]:border-rose-300/50 light:border-black/10 light:text-[#10131a] light:placeholder:text-[#10131a]/30 light:focus:border-cyan-600/60 light:aria-[invalid=true]:border-rose-500/50";
 
 function validate(values: FormValues): FormErrors {
   const errors: FormErrors = {};
@@ -97,6 +102,7 @@ function validate(values: FormValues): FormErrors {
   if (!values.name.trim()) {
     errors.name = "الاسم مطلوب";
   }
+
   if (!values.service) {
     errors.service = "اختر الخدمة التي تحتاجها";
   }
@@ -132,9 +138,18 @@ export default function ContactSection() {
   >("idle");
 
   const reveal = (delay = 0, y = 24) => ({
-    initial: { opacity: 0, y },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.2 },
+    initial: {
+      opacity: 0,
+      y,
+    },
+    whileInView: {
+      opacity: 1,
+      y: 0,
+    },
+    viewport: {
+      once: true,
+      amount: 0.2,
+    },
     transition: {
       duration: 0.7,
       delay,
@@ -172,7 +187,9 @@ export default function ContactSection() {
 
       const firstError = Object.keys(formErrors)[0];
 
-      document.getElementById(`contact-${firstError}`)?.focus();
+      document
+        .getElementById(`contact-${firstError}`)
+        ?.focus();
 
       return;
     }
@@ -215,21 +232,21 @@ export default function ContactSection() {
     <section
       id="contact"
       dir="rtl"
-      className="border-t border-white/5 bg-[#0b0b14] font-[Cairo,sans-serif] text-white"
+      className="border-t border-white/5 bg-[#0b0b14] font-[Cairo,sans-serif] text-white light:border-black/8 light:bg-[#f5f7fa] light:text-[#10131a]"
     >
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-40">
         <div className="grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
           {/* Contact information */}
           <motion.div
             {...reveal()}
-            className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/2.5 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-cyan-300/20 hover:bg-white/[0.035] hover:shadow-[0_20px_70px_rgba(34,211,238,0.06)] sm:p-9 lg:p-10"
+            className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/2.5 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-cyan-300/20 hover:bg-white/[0.035] hover:shadow-[0_20px_70px_rgba(34,211,238,0.06)] sm:p-9 lg:p-10 light:border-black/10 light:bg-white/65 light:hover:border-cyan-600/20 light:hover:bg-white light:hover:shadow-[0_20px_70px_rgba(16,19,26,0.10)]"
           >
             <div>
-              <p className="mb-6 text-sm font-medium text-cyan-300/90">
+              <p className="mb-6 text-sm font-medium text-cyan-300/90 light:text-cyan-700">
                 لنبدأ شيئًا مؤثرًا
               </p>
 
-              <h2 className="mb-6 text-2xl font-semibold text-white/50 transition-colors duration-500 group-hover:text-white/70 sm:text-3xl">
+              <h2 className="mb-6 text-2xl font-semibold text-white/50 transition-colors duration-500 group-hover:text-white/70 sm:text-3xl light:text-[#10131a]/50 light:group-hover:text-[#10131a]/70">
                 اتصل بنا
               </h2>
 
@@ -237,30 +254,30 @@ export default function ContactSection() {
                 جاهزون لتحويل فكرتك إلى تأثير حقيقي.
               </h3>
 
-              <p className="max-w-md text-lg leading-loose text-white/50 transition-colors duration-500 group-hover:text-white/60">
+              <p className="max-w-md text-lg leading-loose text-white/50 transition-colors duration-500 group-hover:text-white/60 light:text-[#10131a]/50 light:group-hover:text-[#10131a]/65">
                 شاركنا فكرتك، ودعنا نبدأ من حيث يبدأ التأثير.
               </p>
             </div>
 
             <motion.div
               {...reveal(0.1)}
-              className="mt-14 border-t border-white/10"
+              className="mt-14 border-t border-white/10 light:border-black/10"
             >
               {/* Location */}
-              <div className="group/item border-b border-white/10 py-6 transition-colors duration-300 hover:border-cyan-300/20">
+              <div className="group/item border-b border-white/10 py-6 transition-colors duration-300 hover:border-cyan-300/20 light:border-black/10 light:hover:border-cyan-600/20">
                 <div className="flex items-start gap-5">
                   <MapPin
                     aria-hidden="true"
                     strokeWidth={1.5}
-                    className="mt-1 h-5 w-5 shrink-0 text-white/30 transition-all duration-300 group-hover/item:text-cyan-300 group-hover/item:drop-shadow-[0_0_8px_rgba(103,232,249,0.4)]"
+                    className="mt-1 h-5 w-5 shrink-0 text-white/30 transition-all duration-300 group-hover/item:text-cyan-300 group-hover/item:drop-shadow-[0_0_8px_rgba(103,232,249,0.4)] light:text-[#10131a]/30 light:group-hover/item:text-cyan-700 light:group-hover/item:drop-shadow-[0_0_8px_rgba(8,145,178,0.25)]"
                   />
 
                   <div>
-                    <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60">
+                    <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60 light:text-[#10131a]/35 light:group-hover/item:text-cyan-700/70">
                       الموقع
                     </p>
 
-                    <address className="not-italic text-lg leading-relaxed text-white/70 transition-colors duration-300 group-hover/item:text-white">
+                    <address className="not-italic text-lg leading-relaxed text-white/70 transition-colors duration-300 group-hover/item:text-white light:text-[#10131a]/70 light:group-hover/item:text-[#10131a]">
                       {CONTACT.address}
                     </address>
                   </div>
@@ -268,23 +285,23 @@ export default function ContactSection() {
               </div>
 
               {/* Email */}
-              <div className="group/item border-b border-white/10 py-6 transition-colors duration-300 hover:border-cyan-300/20">
+              <div className="group/item border-b border-white/10 py-6 transition-colors duration-300 hover:border-cyan-300/20 light:border-black/10 light:hover:border-cyan-600/20">
                 <div className="flex items-start gap-5">
                   <Mail
                     aria-hidden="true"
                     strokeWidth={1.5}
-                    className="mt-1 h-5 w-5 shrink-0 text-white/30 transition-all duration-300 group-hover/item:text-cyan-300 group-hover/item:drop-shadow-[0_0_8px_rgba(103,232,249,0.4)]"
+                    className="mt-1 h-5 w-5 shrink-0 text-white/30 transition-all duration-300 group-hover/item:text-cyan-300 group-hover/item:drop-shadow-[0_0_8px_rgba(103,232,249,0.4)] light:text-[#10131a]/30 light:group-hover/item:text-cyan-700 light:group-hover/item:drop-shadow-[0_0_8px_rgba(8,145,178,0.25)]"
                   />
 
                   <div>
-                    <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60">
+                    <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60 light:text-[#10131a]/35 light:group-hover/item:text-cyan-700/70">
                       البريد الإلكتروني
                     </p>
 
                     <a
                       href={`mailto:${CONTACT.email}`}
                       dir="ltr"
-                      className="text-lg text-white/70 transition-colors duration-300 hover:text-white focus:text-white focus:outline-none"
+                      className="text-lg text-white/70 transition-colors duration-300 hover:text-white focus:text-white focus:outline-none light:text-[#10131a]/70 light:hover:text-[#10131a] light:focus:text-[#10131a]"
                     >
                       {CONTACT.email}
                     </a>
@@ -293,23 +310,23 @@ export default function ContactSection() {
               </div>
 
               {/* Phone */}
-              <div className="group/item border-b border-white/10 py-6 transition-colors duration-300 hover:border-cyan-300/20">
+              <div className="group/item border-b border-white/10 py-6 transition-colors duration-300 hover:border-cyan-300/20 light:border-black/10 light:hover:border-cyan-600/20">
                 <div className="flex items-start gap-5">
                   <Phone
                     aria-hidden="true"
                     strokeWidth={1.5}
-                    className="mt-1 h-5 w-5 shrink-0 text-white/30 transition-all duration-300 group-hover/item:text-cyan-300 group-hover/item:drop-shadow-[0_0_8px_rgba(103,232,249,0.4)]"
+                    className="mt-1 h-5 w-5 shrink-0 text-white/30 transition-all duration-300 group-hover/item:text-cyan-300 group-hover/item:drop-shadow-[0_0_8px_rgba(103,232,249,0.4)] light:text-[#10131a]/30 light:group-hover/item:text-cyan-700 light:group-hover/item:drop-shadow-[0_0_8px_rgba(8,145,178,0.25)]"
                   />
 
                   <div>
-                    <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60">
+                    <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60 light:text-[#10131a]/35 light:group-hover/item:text-cyan-700/70">
                       الهاتف
                     </p>
 
                     <a
                       href={CONTACT.phoneHref}
                       dir="ltr"
-                      className="text-lg text-white/70 transition-colors duration-300 hover:text-white focus:text-white focus:outline-none"
+                      className="text-lg text-white/70 transition-colors duration-300 hover:text-white focus:text-white focus:outline-none light:text-[#10131a]/70 light:hover:text-[#10131a] light:focus:text-[#10131a]"
                     >
                       {CONTACT.phone}
                     </a>
@@ -322,20 +339,27 @@ export default function ContactSection() {
           {/* Form */}
           <motion.div
             {...reveal(0.15)}
-            className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/2.5 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-cyan-300/15 hover:bg-white/3 sm:p-7 lg:p-9"
+            className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/2.5 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-cyan-300/15 hover:bg-white/3 sm:p-7 lg:p-9 light:border-black/10 light:bg-white/65 light:hover:border-cyan-600/15 light:hover:bg-white light:hover:shadow-[0_20px_70px_rgba(16,19,26,0.08)]"
           >
             {status === "success" ? (
               <motion.div
                 role="status"
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+                initial={
+                  reduceMotion
+                    ? false
+                    : { opacity: 0, scale: 0.96 }
+                }
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, ease: EASE }}
+                transition={{
+                  duration: 0.5,
+                  ease: EASE,
+                }}
                 className="flex h-full min-h-105 flex-col items-start justify-center px-2"
               >
                 <CheckCircle2
                   aria-hidden="true"
                   strokeWidth={1.25}
-                  className="mb-6 h-12 w-12 text-cyan-300"
+                  className="mb-6 h-12 w-12 text-cyan-300 light:text-cyan-700"
                 />
 
                 <p className="max-w-md text-2xl font-semibold leading-relaxed sm:text-3xl">
@@ -370,43 +394,44 @@ export default function ContactSection() {
                 {/* Form header */}
                 <div className="mb-8 px-2">
                   <div className="mb-4 flex items-center gap-3">
-                    <span className="h-px w-8 bg-cyan-300" />
+                    <span className="h-px w-8 bg-cyan-300 light:bg-cyan-600" />
 
-                    <span className="text-xs font-medium text-cyan-300/80">
+                    <span className="text-xs font-medium text-cyan-300/80 light:text-cyan-700/80">
                       تواصل معنا
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-bold text-white sm:text-3xl">
+                  <h3 className="text-2xl font-bold text-white sm:text-3xl light:text-[#10131a]">
                     أخبرنا عن مشروعك
                   </h3>
 
-                  <p className="mt-3 max-w-lg text-sm leading-7 text-white/40">
+                  <p className="mt-3 max-w-lg text-sm leading-7 text-white/40 light:text-[#10131a]/50">
                     أخبرنا بما تحتاجه وسنساعدك في تحديد الحل المناسب لمشروعك.
                   </p>
                 </div>
 
                 {/* Service selection */}
-                <div className="mb-8 rounded-2xl border border-white/10 bg-[#10101a] p-5 sm:p-6">
+                <div className="mb-8 rounded-2xl border border-white/10 bg-[#10101a] p-5 sm:p-6 light:border-black/10 light:bg-white">
                   <div className="mb-5 flex items-end justify-between gap-4">
                     <div>
-                      <p className="text-sm font-semibold text-white">
+                      <p className="text-sm font-semibold text-white light:text-[#10131a]">
                         ما الخدمة التي تحتاجها؟
                       </p>
 
-                      <p className="mt-1 text-xs text-white/35">
+                      <p className="mt-1 text-xs text-white/35 light:text-[#10131a]/45">
                         اختر الخدمة الأقرب لاحتياج مشروعك
                       </p>
                     </div>
 
-                    <span className="text-xs text-cyan-300/60">
+                    <span className="text-xs text-cyan-300/60 light:text-cyan-700/70">
                       مطلوب
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {services.map((service) => {
-                      const selected = values.service === service;
+                      const selected =
+                        values.service === service;
 
                       return (
                         <button
@@ -419,23 +444,26 @@ export default function ContactSection() {
                             }));
 
                             if (errors.service) {
-                              setErrors((current) => ({
-                                ...current,
-                                service: undefined,
-                              }));
+                              setErrors(
+                                (current) => ({
+                                  ...current,
+                                  service:
+                                    undefined,
+                                }),
+                              );
                             }
                           }}
                           className={`group flex min-h-12 items-center justify-between rounded-xl border px-4 text-right text-sm transition-all duration-300 ${selected
-                            ? "border-cyan-300/50 bg-cyan-300/8 text-white"
-                            : "border-white/8 bg-white/2 text-white/50 hover:border-white/20 hover:bg-white/4 hover:text-white"
+                            ? "border-cyan-300/50 bg-cyan-300/8 text-white light:border-cyan-600/45 light:bg-cyan-600/8 light:text-[#10131a]"
+                            : "border-white/8 bg-white/2 text-white/50 hover:border-white/20 hover:bg-white/4 hover:text-white light:border-black/8 light:bg-black/2 light:text-[#10131a]/55 light:hover:border-black/15 light:hover:bg-black/[0.035] light:hover:text-[#10131a]"
                             }`}
                         >
                           <span>{service}</span>
 
                           <span
                             className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${selected
-                              ? "border-cyan-300 bg-cyan-300 text-[#080711]"
-                              : "border-white/15 text-transparent"
+                              ? "border-cyan-300 bg-cyan-300 text-[#080711] light:border-cyan-600 light:bg-cyan-600 light:text-white"
+                              : "border-white/15 text-transparent light:border-black/15"
                               }`}
                           >
                             {selected && (
@@ -452,20 +480,20 @@ export default function ContactSection() {
                   </div>
 
                   {errors.service && (
-                    <p className="mt-3 text-xs text-rose-300/90">
+                    <p className="mt-3 text-xs text-rose-300/90 light:text-rose-600">
                       {errors.service}
                     </p>
                   )}
                 </div>
 
                 {/* Personal information */}
-                <div className="rounded-2xl border border-white/10 bg-[#10101a] p-5 sm:p-6">
+                <div className="rounded-2xl border border-white/10 bg-[#10101a] p-5 sm:p-6 light:border-black/10 light:bg-white">
                   <div className="mb-6">
-                    <p className="text-sm font-semibold text-white">
+                    <p className="text-sm font-semibold text-white light:text-[#10131a]">
                       بيانات التواصل
                     </p>
 
-                    <p className="mt-1 text-xs text-white/35">
+                    <p className="mt-1 text-xs text-white/35 light:text-[#10131a]/45">
                       نحتاج بعض البيانات حتى نتمكن من التواصل معك
                     </p>
                   </div>
@@ -477,17 +505,19 @@ export default function ContactSection() {
                       return (
                         <motion.div
                           key={field.name}
-                          {...reveal(0.2 + index * 0.05)}
+                          {...reveal(
+                            0.2 + index * 0.05,
+                          )}
                           className="group mb-8"
                         >
                           <label
                             htmlFor={`contact-${field.name}`}
-                            className="mb-2 block text-sm text-white/45 transition-colors group-focus-within:text-cyan-300/80"
+                            className="mb-2 block text-sm text-white/45 transition-colors group-focus-within:text-cyan-300/80 light:text-[#10131a]/50 light:group-focus-within:text-cyan-700/80"
                           >
                             {field.label}
 
                             {!field.required && (
-                              <span className="mr-2 text-xs text-white/25">
+                              <span className="mr-2 text-xs text-white/25 light:text-[#10131a]/30">
                                 اختياري
                               </span>
                             )}
@@ -497,25 +527,42 @@ export default function ContactSection() {
                             id={`contact-${field.name}`}
                             name={field.name}
                             type={field.type}
-                            autoComplete={field.autoComplete}
-                            placeholder={field.placeholder}
-                            value={values[field.name]}
+                            autoComplete={
+                              field.autoComplete
+                            }
+                            placeholder={
+                              field.placeholder
+                            }
+                            value={
+                              values[field.name]
+                            }
                             onChange={handleChange}
-                            required={field.required}
-                            maxLength={field.name === "email" ? 254 : 120}
-                            aria-invalid={error ? true : undefined}
+                            required={
+                              field.required
+                            }
+                            maxLength={
+                              field.name ===
+                                "email"
+                                ? 254
+                                : 120
+                            }
+                            aria-invalid={
+                              error
+                                ? true
+                                : undefined
+                            }
                             aria-describedby={
                               error
                                 ? `contact-${field.name}-error`
                                 : undefined
                             }
-                            className={`${inputClass} transition-all duration-300 focus:shadow-[0_4px_18px_rgba(34,211,238,0.06)]`}
+                            className={`${inputClass} transition-all duration-300 focus:shadow-[0_4px_18px_rgba(34,211,238,0.06)] light:focus:shadow-[0_4px_18px_rgba(8,145,178,0.08)]`}
                           />
 
                           {error && (
                             <p
                               id={`contact-${field.name}-error`}
-                              className="mt-2 text-sm text-rose-300/90"
+                              className="mt-2 text-sm text-rose-300/90 light:text-rose-600"
                             >
                               {error}
                             </p>
@@ -532,7 +579,7 @@ export default function ContactSection() {
                   >
                     <label
                       htmlFor="contact-message"
-                      className="mb-2 block text-sm text-white/45 transition-colors group-focus-within:text-cyan-300/80"
+                      className="mb-2 block text-sm text-white/45 transition-colors group-focus-within:text-cyan-300/80 light:text-[#10131a]/50 light:group-focus-within:text-cyan-700/80"
                     >
                       الرسالة
                     </label>
@@ -545,19 +592,23 @@ export default function ContactSection() {
                       onChange={handleChange}
                       required
                       maxLength={MAX_MESSAGE}
-                      aria-invalid={errors.message ? true : undefined}
+                      aria-invalid={
+                        errors.message
+                          ? true
+                          : undefined
+                      }
                       aria-describedby={
                         errors.message
                           ? "contact-message-error"
                           : undefined
                       }
-                      className={`${inputClass} min-h-32 resize-y transition-all duration-300 focus:shadow-[0_4px_18px_rgba(34,211,238,0.06)]`}
+                      className={`${inputClass} min-h-32 resize-y transition-all duration-300 focus:shadow-[0_4px_18px_rgba(34,211,238,0.06)] light:focus:shadow-[0_4px_18px_rgba(8,145,178,0.08)]`}
                     />
 
                     {errors.message && (
                       <p
                         id="contact-message-error"
-                        className="mt-2 text-sm text-rose-300/90"
+                        className="mt-2 text-sm text-rose-300/90 light:text-rose-600"
                       >
                         {errors.message}
                       </p>
@@ -569,7 +620,7 @@ export default function ContactSection() {
                 {status === "error" && (
                   <p
                     role="alert"
-                    className="mt-5 flex items-center gap-3 text-sm text-rose-300/90"
+                    className="mt-5 flex items-center gap-3 text-sm text-rose-300/90 light:text-rose-600"
                   >
                     <AlertCircle
                       aria-hidden="true"
@@ -589,7 +640,7 @@ export default function ContactSection() {
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="group flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-cyan-300 px-9 text-base font-bold text-[#080711] outline-none transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-[0_12px_35px_rgba(103,232,249,0.18)] focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b14] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="group flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-cyan-300 px-9 text-base font-bold text-[#080711] outline-none transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-[0_12px_35px_rgba(103,232,249,0.18)] focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b14] disabled:cursor-not-allowed disabled:opacity-60 light:bg-cyan-600 light:text-white light:hover:bg-cyan-500 light:hover:shadow-[0_12px_35px_rgba(8,145,178,0.18)] light:focus-visible:ring-cyan-600 light:focus-visible:ring-offset-[#f5f7fa]"
                   >
                     {status === "sending"
                       ? "جاري إرسال طلبك..."
@@ -602,7 +653,7 @@ export default function ContactSection() {
                     />
                   </button>
 
-                  <p className="mt-3 text-center text-[11px] text-white/25">
+                  <p className="mt-3 text-center text-[11px] text-white/25 light:text-[#10131a]/35">
                     بالضغط على الإرسال، سيتم إرسال بياناتك إلى فريق Atooz.
                   </p>
                 </motion.div>
@@ -613,9 +664,9 @@ export default function ContactSection() {
 
         <motion.div
           {...reveal(0, 15)}
-          className="mt-24 border-t border-white/10 pt-8 lg:mt-32"
+          className="mt-24 border-t border-white/10 pt-8 lg:mt-32 light:border-black/10"
         >
-          <p className="text-lg text-white/50">
+          <p className="text-lg text-white/50 light:text-[#10131a]/50">
             نحن هنا لنسمع فكرتك.
           </p>
         </motion.div>

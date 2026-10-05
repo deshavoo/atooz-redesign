@@ -105,7 +105,6 @@ export default function OurWorkSection() {
         if (startX.current === null) return;
 
         const dx = e.clientX - startX.current;
-
         startX.current = null;
 
         if (Math.abs(dx) < 50) return;
@@ -117,13 +116,15 @@ export default function OurWorkSection() {
         "grid h-12 w-12 place-items-center rounded-xl border border-white/10 text-white/70 " +
         "transition duration-300 hover:-translate-y-1 hover:border-[var(--ow-accent)]/50 hover:text-[var(--ow-accent)] " +
         "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ow-accent)] " +
-        "motion-reduce:transition-none motion-reduce:hover:translate-y-0";
+        "motion-reduce:transition-none motion-reduce:hover:translate-y-0 " +
+        "light:border-black/10 light:text-[#10131a]/65 " +
+        "light:hover:border-[var(--ow-accent)]/45 light:hover:text-[var(--ow-accent)]";
 
     return (
         <section
             id="work"
             aria-labelledby="our-work-title"
-            className="overflow-x-clip bg-[#080711] px-5 py-20 font-(family-name:--font-cairo) text-white sm:px-8 md:py-28 lg:py-36"
+            className="overflow-x-clip bg-[#080711] px-5 py-20 font-(family-name:--font-cairo) text-white sm:px-8 md:py-28 lg:py-36 light:bg-[#f5f7fa] light:text-[#10131a]"
             style={{ ["--ow-accent" as string]: "#5cc8e0" }}
             onKeyDown={onKeyDown}
         >
@@ -153,7 +154,6 @@ export default function OurWorkSection() {
             `}</style>
 
             <div className="mx-auto max-w-7xl">
-
                 <h2
                     id="our-work-title"
                     className="ow-in mb-12 max-w-2xl md:mb-20"
@@ -163,7 +163,6 @@ export default function OurWorkSection() {
                             aria-hidden
                             className="h-px w-8 bg-(--ow-accent)"
                         />
-
                         أعمالنا
                     </span>
 
@@ -173,7 +172,6 @@ export default function OurWorkSection() {
                 </h2>
 
                 <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-
                     <div
                         className="ow-in lg:col-span-7"
                         style={{ ["--d" as string]: "120ms" }}
@@ -182,7 +180,7 @@ export default function OurWorkSection() {
                         aria-label="معرض أعمالنا"
                     >
                         <div
-                            className="relative touch-pan-y overflow-hidden rounded-3xl border border-white/10 bg-[#10101A] shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)]"
+                            className="relative touch-pan-y overflow-hidden rounded-3xl border border-white/10 bg-[#10101A] shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)] light:border-black/10 light:bg-white light:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.16)]"
                             style={{ aspectRatio: IMAGE_RATIO }}
                             onPointerDown={onPointerDown}
                             onPointerUp={onPointerUp}
@@ -195,8 +193,8 @@ export default function OurWorkSection() {
                                     aria-label={`${i + 1} من ${total}`}
                                     aria-hidden={i !== index}
                                     className={`absolute inset-0 transition duration-500 ease-out motion-reduce:transition-none ${i === index
-                                        ? "scale-100 opacity-100"
-                                        : "pointer-events-none scale-[0.98] opacity-0"
+                                            ? "scale-100 opacity-100"
+                                            : "pointer-events-none scale-[0.98] opacity-0"
                                         }`}
                                 >
                                     <Image
@@ -215,7 +213,6 @@ export default function OurWorkSection() {
                             ))}
                         </div>
                     </div>
-
 
                     <div
                         className="ow-in lg:col-span-5"
@@ -238,12 +235,11 @@ export default function OurWorkSection() {
                                     {service.title}
                                 </h3>
 
-                                <p className="max-w-md text-base leading-8 text-white/70">
+                                <p className="max-w-md text-base leading-8 text-white/70 light:text-[#10131a]/65">
                                     {service.description}
                                 </p>
                             </div>
                         </div>
-
 
                         <div className="mt-8 flex items-center gap-6">
                             <div className="flex items-center gap-2">
@@ -296,36 +292,34 @@ export default function OurWorkSection() {
 
                             <div className="flex-1">
                                 <p
-                                    className="mb-2 text-sm font-medium text-white/50"
+                                    className="mb-2 text-sm font-medium text-white/50 light:text-[#10131a]/45"
                                     dir="ltr"
                                 >
-                                    <span className="text-white">
+                                    <span className="text-white light:text-[#10131a]">
                                         {pad(index + 1)}
                                     </span>{" "}
                                     / {pad(total)}
                                 </p>
 
-                                <div className="h-px w-full bg-white/10">
+                                <div className="h-px w-full bg-white/10 light:bg-black/10">
                                     <div
                                         className="h-px bg-(--ow-accent) transition-[width] duration-500 motion-reduce:transition-none"
                                         style={{
-                                            width: `${((index + 1) / total) * 100
-                                                }%`,
+                                            width: `${((index + 1) / total) * 100}%`,
                                         }}
                                     />
                                 </div>
                             </div>
                         </div>
 
-
-                        <ul className="mt-10 border-t border-white/10 md:mt-12">
+                        <ul className="mt-10 border-t border-white/10 md:mt-12 light:border-black/10">
                             {services.map((s, i) => {
                                 const isActive = i === active.service;
 
                                 return (
                                     <li
                                         key={s.title}
-                                        className="ow-in border-b border-white/5"
+                                        className="ow-in border-b border-white/5 light:border-black/8"
                                         style={{
                                             ["--d" as string]: `${360 + i * 90
                                                 }ms`,
@@ -338,29 +332,27 @@ export default function OurWorkSection() {
                                                 isActive ? "true" : undefined
                                             }
                                             className={`group flex w-full items-center gap-5 py-5 text-start transition duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ow-accent) motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${isActive
-                                                ? "translate-x-0 opacity-100 ltr:translate-x-1 rtl:-translate-x-1"
-                                                : "opacity-50 hover:opacity-100 focus-visible:opacity-100"
+                                                    ? "translate-x-0 opacity-100 ltr:translate-x-1 rtl:-translate-x-1"
+                                                    : "opacity-50 hover:opacity-100 focus-visible:opacity-100"
                                                 }`}
                                         >
                                             <span
                                                 className={`text-sm font-semibold transition-colors duration-300 ${isActive
-                                                    ? "text-(--ow-accent)"
-                                                    : "text-white/50 group-hover:text-white"
+                                                        ? "text-(--ow-accent)"
+                                                        : "text-white/50 group-hover:text-white light:text-[#10131a]/45 light:group-hover:text-[#10131a]"
                                                     }`}
                                                 dir="ltr"
                                             >
                                                 {pad(i + 1)}
                                             </span>
 
-                                            <span className="text-lg font-semibold text-white">
+                                            <span className="text-lg font-semibold text-white light:text-[#10131a]">
                                                 {s.title}
                                             </span>
 
                                             <span
                                                 aria-hidden
-                                                className={`h-px bg-(--ow-accent) transition-all duration-300 group-hover:w-12 ${isActive
-                                                    ? "w-10"
-                                                    : "w-0"
+                                                className={`h-px bg-(--ow-accent) transition-all duration-300 group-hover:w-12 ${isActive ? "w-10" : "w-0"
                                                     }`}
                                             />
                                         </button>
