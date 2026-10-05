@@ -88,7 +88,6 @@ export default function OurWorkSection() {
         return () => window.clearInterval(timer);
     }, []);
 
-    // RTL: ArrowLeft moves forward, ArrowRight moves back.
     const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === "ArrowLeft") {
             go(index + 1);
@@ -99,7 +98,6 @@ export default function OurWorkSection() {
         }
     };
 
-    // Touch swipe: finger moving left = next slide.
     const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
         startX.current = e.clientX;
     };
@@ -124,6 +122,7 @@ export default function OurWorkSection() {
 
     return (
         <section
+            id="work"
             aria-labelledby="our-work-title"
             className="overflow-x-clip bg-[#080711] px-5 py-20 font-(family-name:--font-cairo) text-white sm:px-8 md:py-28 lg:py-36"
             style={{ ["--ow-accent" as string]: "#5cc8e0" }}

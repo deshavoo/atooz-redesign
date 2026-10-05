@@ -50,7 +50,7 @@ export default function Hero() {
 
                     <div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:mt-9 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
                         <a
-                            href="/contact"
+                            href="#contact"
                             className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-linear-to-l from-[#775bb1] to-[#397f91] px-7 text-sm font-medium text-white shadow-[0_8px_28px_rgba(65,93,139,0.22)] transition duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-200 motion-reduce:transform-none motion-reduce:transition-none"
                         >
                             ابدأ مشروعك

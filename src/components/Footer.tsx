@@ -347,14 +347,14 @@ export default function Footer() {
             dir="ltr"
             className="text-right sm:text-left"
           >
-            and alot of coffee · developed by{" "}
+            developed by{" "}
             <a
               href={DEV_URL}
               target="_blank"
               rel="noopener noreferrer"
               className={`underline decoration-transparent underline-offset-4 transition-all duration-300 hover:text-cyan-300 hover:decoration-cyan-300/60 focus-visible:text-cyan-300 ${ring}`}
             >
-              Deshavoo
+              Deshavoo.{""} and alot of coffee ☕
             </a>
           </p>
         </motion.div>
