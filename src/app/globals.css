@@ -24,3 +24,60 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #545dac transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+      #6874e8 0%,
+      #6388ed 50%,
+      #4fd7d9 100%);
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Remove scrollbar arrows */
+html::-webkit-scrollbar-button,
+html::-webkit-scrollbar-button:start,
+html::-webkit-scrollbar-button:end,
+html::-webkit-scrollbar-button:single-button,
+html::-webkit-scrollbar-button:vertical:start,
+html::-webkit-scrollbar-button:vertical:end,
+html::-webkit-scrollbar-button:vertical:increment,
+html::-webkit-scrollbar-button:vertical:decrement {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+/* Remove corner */
+html::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Hover */
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+      #775bb1 0%,
+      #6874e8 50%,
+      #4fd7d9 100%);
+}
