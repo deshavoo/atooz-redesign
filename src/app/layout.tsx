@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+
 import { Alexandria } from "next/font/google";
+
 import "./globals.css";
+
 import CustomCursor from "@/components/CustomCursor";
 
 const alexandria = Alexandria({
@@ -11,9 +14,13 @@ const alexandria = Alexandria({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://atooz-redesign.vercel.app"),
   title: "Atooz | للحلول التسويقية والدعاية والإعلان",
   description:
     "حلول متكاملة في التسويق الرقمي، الهويات البصرية، وإدارة الحملات الإعلانية المبتكرة بالسعودية.",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({

@@ -46,28 +46,31 @@ const NAV_ITEMS: readonly NavItem[] = [
     { label: "اتصل بنا", href: "/#contact" },
 ];
 
+
 const SOCIAL_LINKS: readonly SocialLink[] = [
     {
         label: "Behance",
-        href: "https://www.behance.net/",
+        href: "https://www.behance.net/a2zmediahub",
         glyph: "Be",
     },
     {
         label: "Facebook",
-        href: "https://www.facebook.com/a2zmediahub",
+        href: "https://www.facebook.com/a2zmediahub/",
         glyph: "f",
     },
     {
         label: "LinkedIn",
-        href: "https://linkedin.com/company/a2zmediahub",
+        href: "https://www.linkedin.com/company/a2zmediahub/",
         glyph: "in",
     },
     {
         label: "Instagram",
-        href: "https://www.instagram.com/a2zmediahub",
+        href: "https://www.instagram.com/a2zmediahub/",
         glyph: "◎",
     },
 ];
+
+
 
 const SCROLL_THRESHOLD = 30;
 
@@ -366,7 +369,6 @@ export default function Navbar({
                         className="h-auto w-full object-contain opacity-100 transition-opacity duration-500 light:opacity-0"
                     />
 
-                    {/* Light Mode Logo */}
                     <Image
                         src="/images/logo/logo-light-v2.png"
                         alt=""
