@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 
 import { motion, useReducedMotion } from "motion/react";
+import { usePathname } from "next/navigation";
 
 import {
   MapPin,
@@ -15,6 +20,7 @@ import {
 
 const CONTACT = {
   address: "الرياض - حي الملك فهد - حي العليا",
+  addressEn: "Riyadh - King Fahd District - Al Olaya District",
   email: "info@atooz.sa",
   phone: "+201155290421",
   phoneHref: "tel:+201155290421",
@@ -42,49 +48,95 @@ const initialValues: FormValues = {
 
 type FormErrors = Partial<Record<keyof FormValues, string>>;
 
-const services = [
-  "استراتيجية العلامة التجارية",
-  "التسويق الرقمي",
-  "إنتاج الفيديو",
-  "إنشاء المحتوى",
-  "التصميم الإبداعي",
-  "العلاقات العامة",
-];
+const services = {
+  ar: [
+    "استراتيجية العلامة التجارية",
+    "التسويق الرقمي",
+    "إنتاج الفيديو",
+    "إنشاء المحتوى",
+    "التصميم الإبداعي",
+    "العلاقات العامة",
+  ],
+  en: [
+    "Brand Strategy",
+    "Digital Marketing",
+    "Video Production",
+    "Content Creation",
+    "Creative Design",
+    "Public Relations",
+  ],
+};
 
-const fields = [
-  {
-    name: "name",
-    label: "الاسم",
-    placeholder: "الاسم بالكامل",
-    type: "text",
-    autoComplete: "name",
-    required: true,
-  },
-  {
-    name: "email",
-    label: "البريد الإلكتروني",
-    placeholder: "name@example.com",
-    type: "email",
-    autoComplete: "email",
-    required: true,
-  },
-  {
-    name: "phone",
-    label: "رقم الهاتف",
-    placeholder: "رقم الهاتف",
-    type: "tel",
-    autoComplete: "tel",
-    required: true,
-  },
-  {
-    name: "company",
-    label: "الشركة",
-    placeholder: "اسم الشركة",
-    type: "text",
-    autoComplete: "organization",
-    required: false,
-  },
-] as const;
+const fields = {
+  ar: [
+    {
+      name: "name",
+      label: "الاسم",
+      placeholder: "الاسم بالكامل",
+      type: "text",
+      autoComplete: "name",
+      required: true,
+    },
+    {
+      name: "email",
+      label: "البريد الإلكتروني",
+      placeholder: "name@example.com",
+      type: "email",
+      autoComplete: "email",
+      required: true,
+    },
+    {
+      name: "phone",
+      label: "رقم الهاتف",
+      placeholder: "رقم الهاتف",
+      type: "tel",
+      autoComplete: "tel",
+      required: true,
+    },
+    {
+      name: "company",
+      label: "الشركة",
+      placeholder: "اسم الشركة",
+      type: "text",
+      autoComplete: "organization",
+      required: false,
+    },
+  ],
+  en: [
+    {
+      name: "name",
+      label: "Name",
+      placeholder: "Full name",
+      type: "text",
+      autoComplete: "name",
+      required: true,
+    },
+    {
+      name: "email",
+      label: "Email Address",
+      placeholder: "name@example.com",
+      type: "email",
+      autoComplete: "email",
+      required: true,
+    },
+    {
+      name: "phone",
+      label: "Phone Number",
+      placeholder: "Phone number",
+      type: "tel",
+      autoComplete: "tel",
+      required: true,
+    },
+    {
+      name: "company",
+      label: "Company",
+      placeholder: "Company name",
+      type: "text",
+      autoComplete: "organization",
+      required: false,
+    },
+  ],
+} as const;
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phoneRegex = /^[+\d\s()-]{7,20}$/;
@@ -96,39 +148,56 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const inputClass =
   "w-full border-b border-white/10 bg-transparent px-0 py-3 text-base text-white outline-none transition-colors duration-200 placeholder:text-white/25 focus:border-cyan-300/60 aria-[invalid=true]:border-rose-300/50 light:border-black/10 light:text-[#10131a] light:placeholder:text-[#10131a]/30 light:focus:border-cyan-600/60 light:aria-[invalid=true]:border-rose-500/50";
 
-function validate(values: FormValues): FormErrors {
+function validate(values: FormValues, isEnglish: boolean): FormErrors {
   const errors: FormErrors = {};
 
   if (!values.name.trim()) {
-    errors.name = "الاسم مطلوب";
+    errors.name = isEnglish ? "Name is required" : "الاسم مطلوب";
   }
 
   if (!values.service) {
-    errors.service = "اختر الخدمة التي تحتاجها";
+    errors.service = isEnglish
+      ? "Please select the service you need"
+      : "اختر الخدمة التي تحتاجها";
   }
 
   if (!values.email.trim()) {
-    errors.email = "البريد الإلكتروني مطلوب";
+    errors.email = isEnglish
+      ? "Email address is required"
+      : "البريد الإلكتروني مطلوب";
   } else if (!emailRegex.test(values.email.trim())) {
-    errors.email = "أدخل بريدًا إلكترونيًا صحيحًا";
+    errors.email = isEnglish
+      ? "Enter a valid email address"
+      : "أدخل بريدًا إلكترونيًا صحيحًا";
   }
 
   if (!values.phone.trim()) {
-    errors.phone = "رقم الهاتف مطلوب";
+    errors.phone = isEnglish
+      ? "Phone number is required"
+      : "رقم الهاتف مطلوب";
   } else if (!phoneRegex.test(values.phone.trim())) {
-    errors.phone = "أدخل رقم هاتف صحيحًا";
+    errors.phone = isEnglish
+      ? "Enter a valid phone number"
+      : "أدخل رقم هاتف صحيحًا";
   }
 
   if (!values.message.trim()) {
-    errors.message = "الرسالة مطلوبة";
+    errors.message = isEnglish
+      ? "Message is required"
+      : "الرسالة مطلوبة";
   } else if (values.message.length > MAX_MESSAGE) {
-    errors.message = "الرسالة طويلة جدًا";
+    errors.message = isEnglish
+      ? "Message is too long"
+      : "الرسالة طويلة جدًا";
   }
 
   return errors;
 }
 
 export default function ContactSection() {
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
+
   const reduceMotion = useReducedMotion();
 
   const [values, setValues] = useState(initialValues);
@@ -136,6 +205,9 @@ export default function ContactSection() {
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
+
+  const currentServices = isEnglish ? services.en : services.ar;
+  const currentFields = isEnglish ? fields.en : fields.ar;
 
   const reveal = (delay = 0, y = 24) => ({
     initial: {
@@ -180,7 +252,7 @@ export default function ContactSection() {
 
     if (status === "sending") return;
 
-    const formErrors = validate(values);
+    const formErrors = validate(values, isEnglish);
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
@@ -231,7 +303,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      dir="rtl"
+      dir={isEnglish ? "ltr" : "rtl"}
       className="border-t border-white/5 bg-[#0b0b14] font-[Cairo,sans-serif] text-white light:border-black/8 light:bg-[#f5f7fa] light:text-[#10131a]"
     >
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-40">
@@ -243,19 +315,25 @@ export default function ContactSection() {
           >
             <div>
               <p className="mb-6 text-sm font-medium text-cyan-300/90 light:text-cyan-700">
-                لنبدأ شيئًا مؤثرًا
+                {isEnglish
+                  ? "Let's create something impactful"
+                  : "لنبدأ شيئًا مؤثرًا"}
               </p>
 
               <h2 className="mb-6 text-2xl font-semibold text-white/50 transition-colors duration-500 group-hover:text-white/70 sm:text-3xl light:text-[#10131a]/50 light:group-hover:text-[#10131a]/70">
-                اتصل بنا
+                {isEnglish ? "Contact Us" : "اتصل بنا"}
               </h2>
 
               <h3 className="mb-8 max-w-xl text-4xl font-bold leading-[1.45] sm:text-5xl lg:text-[3.5rem]">
-                جاهزون لتحويل فكرتك إلى تأثير حقيقي.
+                {isEnglish
+                  ? "Ready to turn your idea into real impact."
+                  : "جاهزون لتحويل فكرتك إلى تأثير حقيقي."}
               </h3>
 
               <p className="max-w-md text-lg leading-loose text-white/50 transition-colors duration-500 group-hover:text-white/60 light:text-[#10131a]/50 light:group-hover:text-[#10131a]/65">
-                شاركنا فكرتك، ودعنا نبدأ من حيث يبدأ التأثير.
+                {isEnglish
+                  ? "Share your idea with us, and let's start where impact begins."
+                  : "شاركنا فكرتك، ودعنا نبدأ من حيث يبدأ التأثير."}
               </p>
             </div>
 
@@ -274,11 +352,13 @@ export default function ContactSection() {
 
                   <div>
                     <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60 light:text-[#10131a]/35 light:group-hover/item:text-cyan-700/70">
-                      الموقع
+                      {isEnglish ? "Location" : "الموقع"}
                     </p>
 
                     <address className="not-italic text-lg leading-relaxed text-white/70 transition-colors duration-300 group-hover/item:text-white light:text-[#10131a]/70 light:group-hover/item:text-[#10131a]">
-                      {CONTACT.address}
+                      {isEnglish
+                        ? CONTACT.addressEn
+                        : CONTACT.address}
                     </address>
                   </div>
                 </div>
@@ -295,7 +375,9 @@ export default function ContactSection() {
 
                   <div>
                     <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60 light:text-[#10131a]/35 light:group-hover/item:text-cyan-700/70">
-                      البريد الإلكتروني
+                      {isEnglish
+                        ? "Email Address"
+                        : "البريد الإلكتروني"}
                     </p>
 
                     <a
@@ -320,7 +402,7 @@ export default function ContactSection() {
 
                   <div>
                     <p className="mb-1 text-sm text-white/30 transition-colors duration-300 group-hover/item:text-cyan-300/60 light:text-[#10131a]/35 light:group-hover/item:text-cyan-700/70">
-                      الهاتف
+                      {isEnglish ? "Phone" : "الهاتف"}
                     </p>
 
                     <a
@@ -363,7 +445,9 @@ export default function ContactSection() {
                 />
 
                 <p className="max-w-md text-2xl font-semibold leading-relaxed sm:text-3xl">
-                  تم إرسال رسالتك بنجاح. سنتواصل معك قريبًا.
+                  {isEnglish
+                    ? "Your message has been sent successfully. We'll get back to you soon."
+                    : "تم إرسال رسالتك بنجاح. سنتواصل معك قريبًا."}
                 </p>
               </motion.div>
             ) : (
@@ -379,7 +463,6 @@ export default function ContactSection() {
                 >
                   <label>
                     Website
-
                     <input
                       type="text"
                       name="website"
@@ -397,16 +480,20 @@ export default function ContactSection() {
                     <span className="h-px w-8 bg-cyan-300 light:bg-cyan-600" />
 
                     <span className="text-xs font-medium text-cyan-300/80 light:text-cyan-700/80">
-                      تواصل معنا
+                      {isEnglish ? "Get in touch" : "تواصل معنا"}
                     </span>
                   </div>
 
                   <h3 className="text-2xl font-bold text-white sm:text-3xl light:text-[#10131a]">
-                    أخبرنا عن مشروعك
+                    {isEnglish
+                      ? "Tell us about your project"
+                      : "أخبرنا عن مشروعك"}
                   </h3>
 
                   <p className="mt-3 max-w-lg text-sm leading-7 text-white/40 light:text-[#10131a]/50">
-                    أخبرنا بما تحتاجه وسنساعدك في تحديد الحل المناسب لمشروعك.
+                    {isEnglish
+                      ? "Tell us what you need and we'll help you find the right solution for your project."
+                      : "أخبرنا بما تحتاجه وسنساعدك في تحديد الحل المناسب لمشروعك."}
                   </p>
                 </div>
 
@@ -415,23 +502,26 @@ export default function ContactSection() {
                   <div className="mb-5 flex items-end justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold text-white light:text-[#10131a]">
-                        ما الخدمة التي تحتاجها؟
+                        {isEnglish
+                          ? "What service do you need?"
+                          : "ما الخدمة التي تحتاجها؟"}
                       </p>
 
                       <p className="mt-1 text-xs text-white/35 light:text-[#10131a]/45">
-                        اختر الخدمة الأقرب لاحتياج مشروعك
+                        {isEnglish
+                          ? "Choose the service closest to your project needs"
+                          : "اختر الخدمة الأقرب لاحتياج مشروعك"}
                       </p>
                     </div>
 
                     <span className="text-xs text-cyan-300/60 light:text-cyan-700/70">
-                      مطلوب
+                      {isEnglish ? "Required" : "مطلوب"}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {services.map((service) => {
-                      const selected =
-                        values.service === service;
+                    {currentServices.map((service) => {
+                      const selected = values.service === service;
 
                       return (
                         <button
@@ -444,26 +534,23 @@ export default function ContactSection() {
                             }));
 
                             if (errors.service) {
-                              setErrors(
-                                (current) => ({
-                                  ...current,
-                                  service:
-                                    undefined,
-                                }),
-                              );
+                              setErrors((current) => ({
+                                ...current,
+                                service: undefined,
+                              }));
                             }
                           }}
-                          className={`group flex min-h-12 items-center justify-between rounded-xl border px-4 text-right text-sm transition-all duration-300 ${selected
-                            ? "border-cyan-300/50 bg-cyan-300/8 text-white light:border-cyan-600/45 light:bg-cyan-600/8 light:text-[#10131a]"
-                            : "border-white/8 bg-white/2 text-white/50 hover:border-white/20 hover:bg-white/4 hover:text-white light:border-black/8 light:bg-black/2 light:text-[#10131a]/55 light:hover:border-black/15 light:hover:bg-black/[0.035] light:hover:text-[#10131a]"
+                          className={`group flex min-h-12 items-center justify-between rounded-xl border px-4 text-left text-sm transition-all duration-300 ${selected
+                              ? "border-cyan-300/50 bg-cyan-300/8 text-white light:border-cyan-600/45 light:bg-cyan-600/8 light:text-[#10131a]"
+                              : "border-white/8 bg-white/2 text-white/50 hover:border-white/20 hover:bg-white/4 hover:text-white light:border-black/8 light:bg-black/2 light:text-[#10131a]/55 light:hover:border-black/15 light:hover:bg-black/[0.035] light:hover:text-[#10131a]"
                             }`}
                         >
                           <span>{service}</span>
 
                           <span
                             className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${selected
-                              ? "border-cyan-300 bg-cyan-300 text-[#080711] light:border-cyan-600 light:bg-cyan-600 light:text-white"
-                              : "border-white/15 text-transparent light:border-black/15"
+                                ? "border-cyan-300 bg-cyan-300 text-[#080711] light:border-cyan-600 light:bg-cyan-600 light:text-white"
+                                : "border-white/15 text-transparent light:border-black/15"
                               }`}
                           >
                             {selected && (
@@ -490,16 +577,20 @@ export default function ContactSection() {
                 <div className="rounded-2xl border border-white/10 bg-[#10101a] p-5 sm:p-6 light:border-black/10 light:bg-white">
                   <div className="mb-6">
                     <p className="text-sm font-semibold text-white light:text-[#10131a]">
-                      بيانات التواصل
+                      {isEnglish
+                        ? "Contact Information"
+                        : "بيانات التواصل"}
                     </p>
 
                     <p className="mt-1 text-xs text-white/35 light:text-[#10131a]/45">
-                      نحتاج بعض البيانات حتى نتمكن من التواصل معك
+                      {isEnglish
+                        ? "We need a few details so we can get in touch with you"
+                        : "نحتاج بعض البيانات حتى نتمكن من التواصل معك"}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 gap-x-10 md:grid-cols-2">
-                    {fields.map((field, index) => {
+                    {currentFields.map((field, index) => {
                       const error = errors[field.name];
 
                       return (
@@ -518,7 +609,9 @@ export default function ContactSection() {
 
                             {!field.required && (
                               <span className="mr-2 text-xs text-white/25 light:text-[#10131a]/30">
-                                اختياري
+                                {isEnglish
+                                  ? "Optional"
+                                  : "اختياري"}
                               </span>
                             )}
                           </label>
@@ -527,29 +620,18 @@ export default function ContactSection() {
                             id={`contact-${field.name}`}
                             name={field.name}
                             type={field.type}
-                            autoComplete={
-                              field.autoComplete
-                            }
-                            placeholder={
-                              field.placeholder
-                            }
-                            value={
-                              values[field.name]
-                            }
+                            autoComplete={field.autoComplete}
+                            placeholder={field.placeholder}
+                            value={values[field.name]}
                             onChange={handleChange}
-                            required={
-                              field.required
-                            }
+                            required={field.required}
                             maxLength={
-                              field.name ===
-                                "email"
+                              field.name === "email"
                                 ? 254
                                 : 120
                             }
                             aria-invalid={
-                              error
-                                ? true
-                                : undefined
+                              error ? true : undefined
                             }
                             aria-describedby={
                               error
@@ -581,21 +663,23 @@ export default function ContactSection() {
                       htmlFor="contact-message"
                       className="mb-2 block text-sm text-white/45 transition-colors group-focus-within:text-cyan-300/80 light:text-[#10131a]/50 light:group-focus-within:text-cyan-700/80"
                     >
-                      الرسالة
+                      {isEnglish ? "Message" : "الرسالة"}
                     </label>
 
                     <textarea
                       id="contact-message"
                       name="message"
-                      placeholder="حدثنا عن مشروعك أو فكرتك..."
+                      placeholder={
+                        isEnglish
+                          ? "Tell us about your project or idea..."
+                          : "حدثنا عن مشروعك أو فكرتك..."
+                      }
                       value={values.message}
                       onChange={handleChange}
                       required
                       maxLength={MAX_MESSAGE}
                       aria-invalid={
-                        errors.message
-                          ? true
-                          : undefined
+                        errors.message ? true : undefined
                       }
                       aria-describedby={
                         errors.message
@@ -628,7 +712,9 @@ export default function ContactSection() {
                       strokeWidth={1.5}
                     />
 
-                    حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى.
+                    {isEnglish
+                      ? "Something went wrong while sending your message. Please try again."
+                      : "حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى."}
                   </p>
                 )}
 
@@ -643,18 +729,25 @@ export default function ContactSection() {
                     className="group flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-cyan-300 px-9 text-base font-bold text-[#080711] outline-none transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-[0_12px_35px_rgba(103,232,249,0.18)] focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b14] disabled:cursor-not-allowed disabled:opacity-60 light:bg-cyan-600 light:text-white light:hover:bg-cyan-500 light:hover:shadow-[0_12px_35px_rgba(8,145,178,0.18)] light:focus-visible:ring-cyan-600 light:focus-visible:ring-offset-[#f5f7fa]"
                   >
                     {status === "sending"
-                      ? "جاري إرسال طلبك..."
-                      : "إرسال طلب المشروع"}
+                      ? isEnglish
+                        ? "Sending your request..."
+                        : "جاري إرسال طلبك..."
+                      : isEnglish
+                        ? "Send Project Request"
+                        : "إرسال طلب المشروع"}
 
                     <ArrowUpLeft
                       aria-hidden="true"
                       strokeWidth={2}
-                      className="h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1"
+                      className={`h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 ${isEnglish ? "rotate-90" : ""
+                        }`}
                     />
                   </button>
 
                   <p className="mt-3 text-center text-[11px] text-white/25 light:text-[#10131a]/35">
-                    بالضغط على الإرسال، سيتم إرسال بياناتك إلى فريق Atooz.
+                    {isEnglish
+                      ? "By submitting, your information will be sent to the Atooz team."
+                      : "بالضغط على الإرسال، سيتم إرسال بياناتك إلى فريق Atooz."}
                   </p>
                 </motion.div>
               </form>
@@ -667,7 +760,9 @@ export default function ContactSection() {
           className="mt-24 border-t border-white/10 pt-8 lg:mt-32 light:border-black/10"
         >
           <p className="text-lg text-white/50 light:text-[#10131a]/50">
-            نحن هنا لنسمع فكرتك.
+            {isEnglish
+              ? "We're here to hear your idea."
+              : "نحن هنا لنسمع فكرتك."}
           </p>
         </motion.div>
       </div>

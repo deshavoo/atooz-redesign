@@ -1,8 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function AboutSection() {
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
+
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -40,6 +44,7 @@ export default function AboutSection() {
       ref={ref}
       id="about"
       aria-labelledby="about-heading"
+      dir={isEnglish ? "ltr" : "rtl"}
       className="relative isolate overflow-hidden bg-[#080711] py-28 text-white sm:py-32 lg:py-40 light:bg-[#f5f7fa] light:text-[#10131a]"
     >
       <div
@@ -62,7 +67,7 @@ export default function AboutSection() {
             />
 
             <p className="text-sm font-medium tracking-[0.22em] text-cyan-300 light:text-cyan-700">
-              من نحن
+              {isEnglish ? "ABOUT US" : "من نحن"}
             </p>
 
             <span
@@ -75,7 +80,7 @@ export default function AboutSection() {
             id="about-heading"
             className="text-6xl font-bold leading-none tracking-tighter sm:text-7xl md:text-8xl lg:text-[9rem]"
           >
-            قصتنا
+            {isEnglish ? "Our Story" : "قصتنا"}
           </h2>
 
           <div className="mx-auto mt-9 flex items-center justify-center gap-3">
@@ -98,50 +103,109 @@ export default function AboutSection() {
           )}`}
         >
           <div className="space-y-8 text-lg leading-[2.15] text-white/65 sm:text-xl sm:leading-[2.2] light:text-[#10131a]/65">
-            <p>
-              تأسست A2Z لتكون إحدى الشركات الرائدة في مجال
-              الخدمات الإعلامية المختصة في الاقتصاد في المملكة
-              ودول الخليج العربي والشرق الأوسط، وتقدم خدماتها من
-              خلال منظومة متكاملة من الخدمات الإعلامية وإدارة
-              الهوية المؤسسية وإنشاء وإدارة المحتوى الإعلامي
-              بصورة استراتيجية، خصوصًا المحتوى الاقتصادي.
-              <br />
-              <br />
-              كما تقدم الشركة حلولًا إعلامية في تحسين الصورة
-              الذهنية للمنظمات الحكومية وكيانات القطاع الخاص،
-              وإدارة وسائل التواصل الاجتماعي، وتقديم الخطط
-              الإعلامية المستقبلية وإدارة الأزمات الإعلامية،
-              كما نعمل على تطوير فرق العمل لتكون أكثر كفاءة
-              ومرونة مع المتغيرات الإعلامية المتسارعة.
-              <br />
-              <br />
-              نتميز بقدرتنا على انتقاء المنهجيات الأكثر ملاءمة
-              لوضع الصورة المؤسسية للعميل وعلامته التجارية
-              وجعلها في صدارة المشهد الإعلامي، من خلال اختيار
-              الوقت المناسب لإطلاق الرسالة الأكثر فعالية من
-              منظور الجمهور المستهدف.
-              <br />
-              <br />
-              العلاقات العامة ومنصات التواصل الاجتماعي لا
-              تركز على الرسالة التي تطلقها أنت بقدر تركيزها
-              على التصور الذي يردده الآخرون عنك.
-              <br />
-              <br />
-              ولذلك يُعدّ اختيار الشريك الإعلامي المناسب لمؤسستك
-              مسألة بالغة الأهمية لنجاح أعمالك.
-              <br />
-              <br />
-              تأسست A2Z برؤية لسد الفجوة بين الإعلام والاقتصاد.
-              وبنينا سمعة في الابتكار والجودة ونجاح العملاء.
-              يجمع فريقنا من الخبراء مهارات ووجهات نظر متنوعة
-              لإنشاء عمل متميز.
-              <br />
-              <br />
-              نعمل مع العلامات التجارية الرائدة والشركات الناشئة
-              والمنظمات عبر مختلف الصناعات، لمساعدتها على بناء
-              حضورها وإشراك جماهيرها وتحقيق أهدافها من خلال حلول
-              إعلامية وتواصلية متكاملة.
-            </p>
+            {isEnglish ? (
+              <p>
+                A2Z was founded to become one of the leading
+                companies specializing in economic media
+                services across the Kingdom of Saudi Arabia,
+                the Gulf region, and the Middle East. We provide
+                our services through an integrated ecosystem
+                of media solutions, corporate identity
+                management, and strategic media content
+                creation and management, with a particular
+                focus on economic content.
+                <br />
+                <br />
+                We also provide media solutions focused on
+                improving the public image of government
+                organizations and private-sector entities,
+                managing social media platforms, developing
+                future media strategies, and managing media
+                crises. We also work on developing teams to
+                become more efficient and adaptable to the
+                rapidly changing media landscape.
+                <br />
+                <br />
+                We stand out through our ability to select the
+                most suitable methodologies for shaping the
+                corporate image of our clients and their
+                brands, placing them at the forefront of the
+                media landscape by choosing the right moment
+                to deliver the most effective message from the
+                perspective of the target audience.
+                <br />
+                <br />
+                Public relations and social media platforms
+                are not focused solely on the message you
+                communicate, but rather on the perception that
+                others have and share about you.
+                <br />
+                <br />
+                That is why choosing the right media partner
+                for your organization is critically important
+                to the success of your business.
+                <br />
+                <br />
+                A2Z was founded with a vision to bridge the gap
+                between media and economics. We have built a
+                reputation for innovation, quality, and client
+                success. Our team of experts brings together
+                diverse skills and perspectives to create
+                outstanding work.
+                <br />
+                <br />
+                We work with leading brands, startups, and
+                organizations across different industries,
+                helping them build their presence, engage their
+                audiences, and achieve their goals through
+                integrated media and communication solutions.
+              </p>
+            ) : (
+              <p>
+                تأسست A2Z لتكون إحدى الشركات الرائدة في مجال
+                الخدمات الإعلامية المختصة في الاقتصاد في المملكة
+                ودول الخليج العربي والشرق الأوسط، وتقدم خدماتها من
+                خلال منظومة متكاملة من الخدمات الإعلامية وإدارة
+                الهوية المؤسسية وإنشاء وإدارة المحتوى الإعلامي
+                بصورة استراتيجية، خصوصًا المحتوى الاقتصادي.
+                <br />
+                <br />
+                كما تقدم الشركة حلولًا إعلامية في تحسين الصورة
+                الذهنية للمنظمات الحكومية وكيانات القطاع الخاص،
+                وإدارة وسائل التواصل الاجتماعي، وتقديم الخطط
+                الإعلامية المستقبلية وإدارة الأزمات الإعلامية،
+                كما نعمل على تطوير فرق العمل لتكون أكثر كفاءة
+                ومرونة مع المتغيرات الإعلامية المتسارعة.
+                <br />
+                <br />
+                نتميز بقدرتنا على انتقاء المنهجيات الأكثر ملاءمة
+                لوضع الصورة المؤسسية للعميل وعلامته التجارية
+                وجعلها في صدارة المشهد الإعلامي، من خلال اختيار
+                الوقت المناسب لإطلاق الرسالة الأكثر فعالية من
+                منظور الجمهور المستهدف.
+                <br />
+                <br />
+                العلاقات العامة ومنصات التواصل الاجتماعي لا
+                تركز على الرسالة التي تطلقها أنت بقدر تركيزها
+                على التصور الذي يردده الآخرون عنك.
+                <br />
+                <br />
+                ولذلك يُعدّ اختيار الشريك الإعلامي المناسب لمؤسستك
+                مسألة بالغة الأهمية لنجاح أعمالك.
+                <br />
+                <br />
+                تأسست A2Z برؤية لسد الفجوة بين الإعلام والاقتصاد.
+                وبنينا سمعة في الابتكار والجودة ونجاح العملاء.
+                يجمع فريقنا من الخبراء مهارات ووجهات نظر متنوعة
+                لإنشاء عمل متميز.
+                <br />
+                <br />
+                نعمل مع العلامات التجارية الرائدة والشركات الناشئة
+                والمنظمات عبر مختلف الصناعات، لمساعدتها على بناء
+                حضورها وإشراك جماهيرها وتحقيق أهدافها من خلال حلول
+                إعلامية وتواصلية متكاملة.
+              </p>
+            )}
           </div>
         </article>
       </div>

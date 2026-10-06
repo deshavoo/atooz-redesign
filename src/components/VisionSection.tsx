@@ -1,11 +1,11 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import {
   motion,
   useReducedMotion,
   type Variants,
 } from "motion/react";
-
 import {
   Lightbulb,
   Orbit,
@@ -13,57 +13,116 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-const VALUES = [
-  {
-    number: "01",
-    title: "الابتكار",
-    description: "الريادة بحلول متطورة ونهج إبداعية",
-    Icon: Lightbulb,
-    tilt: "group-hover:rotate-6 group-focus-visible:rotate-6",
-  },
-  {
-    number: "02",
-    title: "التميز",
-    description: "الحفاظ على أعلى المعايير في كل ما نقوم به",
-    Icon: Sparkles,
-    tilt: "group-hover:-rotate-6 group-focus-visible:-rotate-6",
-  },
-  {
-    number: "03",
-    title: "النمو",
-    description: "دفع النمو المستدام لعملائنا وشركائنا",
-    Icon: TrendingUp,
-    tilt: "group-hover:rotate-6 group-focus-visible:rotate-6",
-  },
-  {
-    number: "04",
-    title: "التأثير",
-    description: "خلق تغيير ذي معنى وقيمة دائمة",
-    Icon: Orbit,
-    tilt: "group-hover:-rotate-6 group-focus-visible:-rotate-6",
-  },
-];
+const VALUES = {
+  ar: [
+    {
+      number: "01",
+      title: "الابتكار",
+      description: "الريادة بحلول متطورة ونهج إبداعية",
+      Icon: Lightbulb,
+      tilt: "group-hover:rotate-6 group-focus-visible:rotate-6",
+    },
+    {
+      number: "02",
+      title: "التميز",
+      description: "الحفاظ على أعلى المعايير في كل ما نقوم به",
+      Icon: Sparkles,
+      tilt: "group-hover:-rotate-6 group-focus-visible:-rotate-6",
+    },
+    {
+      number: "03",
+      title: "النمو",
+      description: "دفع النمو المستدام لعملائنا وشركائنا",
+      Icon: TrendingUp,
+      tilt: "group-hover:rotate-6 group-focus-visible:rotate-6",
+    },
+    {
+      number: "04",
+      title: "التأثير",
+      description: "خلق تغيير ذي معنى وقيمة دائمة",
+      Icon: Orbit,
+      tilt: "group-hover:-rotate-6 group-focus-visible:-rotate-6",
+    },
+  ],
+  en: [
+    {
+      number: "01",
+      title: "Innovation",
+      description: "Leading with advanced solutions and creative approaches",
+      Icon: Lightbulb,
+      tilt: "group-hover:rotate-6 group-focus-visible:rotate-6",
+    },
+    {
+      number: "02",
+      title: "Excellence",
+      description: "Maintaining the highest standards in everything we do",
+      Icon: Sparkles,
+      tilt: "group-hover:-rotate-6 group-focus-visible:-rotate-6",
+    },
+    {
+      number: "03",
+      title: "Growth",
+      description: "Driving sustainable growth for our clients and partners",
+      Icon: TrendingUp,
+      tilt: "group-hover:rotate-6 group-focus-visible:rotate-6",
+    },
+    {
+      number: "04",
+      title: "Impact",
+      description: "Creating meaningful change and lasting value",
+      Icon: Orbit,
+      tilt: "group-hover:-rotate-6 group-focus-visible:-rotate-6",
+    },
+  ],
+};
 
-const GOALS = [
-  {
-    title: "التوسع",
-    text: "نحن ملتزمون بتوسيع نطاقنا وقدراتنا، وجلب حلول مبتكرة لمزيد من الشركات في جميع أنحاء المنطقة. هدفنا هو أن نصبح الشريك المفضل للشركات التي تتطلع إلى تحويل استراتيجيات التواصل الخاصة بها.",
-  },
-  {
-    title: "الابتكار",
-    text: "نستثمر في التقنيات الجديدة والمواهب والشراكات التي ستمكننا من تقديم أكبر قيمة لعملائنا. نبني مستقبلًا يعمل فيه الإعلام والتواصل الاستراتيجي بسلاسة معًا لدفع نجاح الأعمال.",
-  },
-  {
-    number: "",
-    title: "التأثير",
-    text: "من خلال الابتكار المستمر والالتزام بالتميز، نشكّل مستقبل تواصل الشركات واتصالاتها ونموها في عالم رقمي متزايد.",
-  },
-];
+const GOALS = {
+  ar: [
+    {
+      number: "01",
+      title: "التوسع",
+      text: "نحن ملتزمون بتوسيع نطاقنا وقدراتنا، وجلب حلول مبتكرة لمزيد من الشركات في جميع أنحاء المنطقة. هدفنا هو أن نصبح الشريك المفضل للشركات التي تتطلع إلى تحويل استراتيجيات التواصل الخاصة بها.",
+    },
+    {
+      number: "02",
+      title: "الابتكار",
+      text: "نستثمر في التقنيات الجديدة والمواهب والشراكات التي ستمكننا من تقديم أكبر قيمة لعملائنا. نبني مستقبلًا يعمل فيه الإعلام والتواصل الاستراتيجي بسلاسة معًا لدفع نجاح الأعمال.",
+    },
+    {
+      number: "03",
+      title: "التأثير",
+      text: "من خلال الابتكار المستمر والالتزام بالتميز، نشكّل مستقبل تواصل الشركات واتصالاتها ونموها في عالم رقمي متزايد.",
+    },
+  ],
+  en: [
+    {
+      number: "01",
+      title: "Expansion",
+      text: "We are committed to expanding our reach and capabilities, bringing innovative solutions to more businesses across the region. Our goal is to become the preferred partner for companies looking to transform their communication strategies.",
+    },
+    {
+      number: "02",
+      title: "Innovation",
+      text: "We invest in emerging technologies, talent, and partnerships that enable us to deliver greater value to our clients. We are building a future where media and strategic communication work seamlessly together to drive business success.",
+    },
+    {
+      number: "03",
+      title: "Impact",
+      text: "Through continuous innovation and a commitment to excellence, we are shaping the future of corporate communication, connection, and growth in an increasingly digital world.",
+    },
+  ],
+};
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function VisionSection() {
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
+
   const reduce = useReducedMotion();
+
+  const values = isEnglish ? VALUES.en : VALUES.ar;
+  const goals = isEnglish ? GOALS.en : GOALS.ar;
 
   const fadeUp = (delay = 0) => ({
     initial: {
@@ -113,6 +172,7 @@ export default function VisionSection() {
     <section
       id="vision"
       aria-labelledby="vision-heading"
+      dir={isEnglish ? "ltr" : "rtl"}
       className="relative isolate overflow-hidden bg-[#080711] py-28 text-white sm:py-32 lg:py-40 light:bg-[#f5f7fa] light:text-[#10131a]"
     >
       <div
@@ -136,7 +196,7 @@ export default function VisionSection() {
               />
 
               <p className="text-sm font-medium tracking-[0.22em] text-cyan-300 light:text-cyan-700">
-                رؤيتنا
+                {isEnglish ? "OUR VISION" : "رؤيتنا"}
               </p>
 
               <span
@@ -149,11 +209,15 @@ export default function VisionSection() {
               id="vision-heading"
               className="text-6xl font-bold leading-none tracking-tighter sm:text-7xl md:text-8xl lg:text-[8rem]"
             >
-              بيان رؤيتنا
+              {isEnglish
+                ? "Our Vision Statement"
+                : "بيان رؤيتنا"}
             </h2>
 
             <p className="mx-auto mt-7 max-w-2xl text-base font-medium leading-8 text-white/40 sm:text-lg light:text-[#10131a]/50">
-              تشكيل مستقبل الإعلام والتواصل الاستراتيجي
+              {isEnglish
+                ? "Shaping the future of media and strategic communication"
+                : "تشكيل مستقبل الإعلام والتواصل الاستراتيجي"}
             </p>
 
             <div className="mx-auto mt-9 flex items-center justify-center gap-3">
@@ -174,31 +238,69 @@ export default function VisionSection() {
           {...fadeUp(0.15)}
           className="mx-auto mt-24 max-w-4xl text-center sm:mt-28"
         >
-          <p className="mx-auto mt-8 max-w-4xl text-xl font-medium leading-loose text-white/80 sm:text-2xl sm:leading-[2.05] lg:text-3xl lg:leading-[2.05] light:text-[#10131a]/80">
-            أن نكون الشركة{" "}
-            <strong className="font-bold text-white light:text-[#10131a]">
-              الرائدة
-            </strong>{" "}
-            في الاستراتيجية والإعلام والاقتصاد والعلامات التجارية
-            في المنطقة، معترف بها{" "}
-            <strong className="font-semibold text-cyan-200 light:text-cyan-700">
-              للابتكار
-            </strong>{" "}
-            والتميز{" "}
-            <strong className="font-semibold text-cyan-200 light:text-cyan-700">
-              والتأثير التحويلي
-            </strong>
-            .
-          </p>
+          {isEnglish ? (
+            <>
+              <p className="mx-auto mt-8 max-w-4xl text-xl font-medium leading-loose text-white/80 sm:text-2xl sm:leading-[2.05] lg:text-3xl lg:leading-[2.05] light:text-[#10131a]/80">
+                To be the{" "}
+                <strong className="font-bold text-white light:text-[#10131a]">
+                  leading
+                </strong>{" "}
+                company in strategy, media, economics, and
+                branding across the region, recognized for{" "}
+                <strong className="font-semibold text-cyan-200 light:text-cyan-700">
+                  innovation
+                </strong>
+                ,{" "}
+                <strong className="font-semibold text-cyan-200 light:text-cyan-700">
+                  excellence
+                </strong>
+                , and{" "}
+                <strong className="font-semibold text-cyan-200 light:text-cyan-700">
+                  transformative impact
+                </strong>
+                .
+              </p>
 
-          <p className="mx-auto mt-8 max-w-3xl text-lg leading-[2.1] text-white/45 sm:text-xl sm:leading-[2.15] light:text-[#10131a]/55">
-            نتخيل مستقبلًا حيث تتواصل الشركات بوضوح وإبداع وهدف،
-            وبناء روابط ذات معنى تدفع{" "}
-            <strong className="font-semibold text-cyan-200 light:text-cyan-700">
-              النمو
-            </strong>{" "}
-            والنجاح.
-          </p>
+              <p className="mx-auto mt-8 max-w-3xl text-lg leading-[2.1] text-white/45 sm:text-xl sm:leading-[2.15] light:text-[#10131a]/55">
+                We envision a future where businesses
+                communicate with clarity, creativity, and
+                purpose, building meaningful connections that
+                drive{" "}
+                <strong className="font-semibold text-cyan-200 light:text-cyan-700">
+                  growth
+                </strong>{" "}
+                and success.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="mx-auto mt-8 max-w-4xl text-xl font-medium leading-loose text-white/80 sm:text-2xl sm:leading-[2.05] lg:text-3xl lg:leading-[2.05] light:text-[#10131a]/80">
+                أن نكون الشركة{" "}
+                <strong className="font-bold text-white light:text-[#10131a]">
+                  الرائدة
+                </strong>{" "}
+                في الاستراتيجية والإعلام والاقتصاد والعلامات
+                التجارية في المنطقة، معترف بها{" "}
+                <strong className="font-semibold text-cyan-200 light:text-cyan-700">
+                  للابتكار
+                </strong>{" "}
+                والتميز{" "}
+                <strong className="font-semibold text-cyan-200 light:text-cyan-700">
+                  والتأثير التحويلي
+                </strong>
+                .
+              </p>
+
+              <p className="mx-auto mt-8 max-w-3xl text-lg leading-[2.1] text-white/45 sm:text-xl sm:leading-[2.15] light:text-[#10131a]/55">
+                نتخيل مستقبلًا حيث تتواصل الشركات بوضوح وإبداع
+                وهدف، وبناء روابط ذات معنى تدفع{" "}
+                <strong className="font-semibold text-cyan-200 light:text-cyan-700">
+                  النمو
+                </strong>{" "}
+                والنجاح.
+              </p>
+            </>
+          )}
 
           <div
             aria-hidden="true"
@@ -216,7 +318,7 @@ export default function VisionSection() {
           }}
           className="mt-24 grid gap-4 sm:grid-cols-2 lg:mt-32 lg:grid-cols-4"
         >
-          {VALUES.map(
+          {values.map(
             ({
               number,
               title,
@@ -279,20 +381,22 @@ export default function VisionSection() {
             className="text-center"
           >
             <p className="text-xs font-medium tracking-[0.25em] text-cyan-300 light:text-cyan-700">
-              إلى أين نتجه
+              {isEnglish ? "WHERE WE ARE HEADED" : "إلى أين نتجه"}
             </p>
 
             <h3
               id="goals-heading"
               className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl"
             >
-              أهدافنا المستقبلية
+              {isEnglish
+                ? "Our Future Goals"
+                : "أهدافنا المستقبلية"}
             </h3>
           </motion.header>
 
           <div className="mx-auto mt-16 max-w-5xl">
             <div className="space-y-0">
-              {GOALS.map(({ number, title, text }, index) => (
+              {goals.map(({ number, title, text }, index) => (
                 <motion.article
                   key={title}
                   {...fadeUp(index * 0.08)}

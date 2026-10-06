@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     memo,
     useCallback,
@@ -10,7 +10,6 @@ import {
     useRef,
     useState,
 } from "react";
-
 import { ArrowUpLeft, Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -25,19 +24,7 @@ interface SocialLink {
     readonly glyph: string;
 }
 
-interface NavbarProps {
-    onLanguageToggle?: () => void;
-}
-
-interface MobileMenuProps {
-    isOpen: boolean;
-    activeHref: string;
-    onClose: () => void;
-    onNavigate: (href: string) => void;
-    onLanguageToggle?: () => void;
-}
-
-const NAV_ITEMS: readonly NavItem[] = [
+const NAV_ITEMS_AR: readonly NavItem[] = [
     { label: "الرئيسية", href: "/" },
     { label: "كيف نصنع التأثير", href: "/#impact" },
     { label: "أعمالنا", href: "/#work" },
@@ -46,6 +33,14 @@ const NAV_ITEMS: readonly NavItem[] = [
     { label: "اتصل بنا", href: "/#contact" },
 ];
 
+const NAV_ITEMS_EN: readonly NavItem[] = [
+    { label: "Home", href: "/en" },
+    { label: "How We Create Impact", href: "/en#impact" },
+    { label: "Our Work", href: "/en#work" },
+    { label: "About Us", href: "/en#about" },
+    { label: "Our Vision", href: "/en#vision" },
+    { label: "Contact Us", href: "/en#contact" },
+];
 
 const SOCIAL_LINKS: readonly SocialLink[] = [
     {
@@ -70,30 +65,25 @@ const SOCIAL_LINKS: readonly SocialLink[] = [
     },
 ];
 
-
-
 const SCROLL_THRESHOLD = 30;
-
 const DESKTOP_QUERY = "(min-width: 1024px)";
 
 const FOCUS_RING =
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5b58c6]";
 
-const getActiveHref = () => {
+const getActiveHref = (isEnglish: boolean) => {
     if (typeof window === "undefined") {
-        return "/";
+        return isEnglish ? "/en" : "/";
     }
 
     const hash = window.location.hash;
 
     if (!hash) {
-        return "/";
+        return isEnglish ? "/en" : "/";
     }
 
-    return `/#${hash.slice(1)}`;
+    return `${isEnglish ? "/en" : ""}/#${hash.slice(1)}`;
 };
-
-
 
 const SocialLinks = memo(function SocialLinks() {
     return (
@@ -104,15 +94,15 @@ const SocialLinks = memo(function SocialLinks() {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`${label} (يفتح في نافذة جديدة)`}
+                        aria-label={`${label} (opens in a new window)`}
                         className={`group flex h-9 w-9 items-center justify-center rounded-full bg-[#17171f] text-white shadow-sm transition-[transform,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-[#5b58c6] hover:text-white hover:shadow-md dark:bg-white dark:text-[#29253d] motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${FOCUS_RING}`}
                     >
                         <span
                             aria-hidden="true"
                             dir="ltr"
                             className={`font-bold transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-360 motion-reduce:transition-none ${glyph.length > 1
-                                ? "text-[11px]"
-                                : "text-[15px]"
+                                    ? "text-[11px]"
+                                    : "text-[15px]"
                                 }`}
                         >
                             {glyph}
@@ -124,36 +114,49 @@ const SocialLinks = memo(function SocialLinks() {
     );
 });
 
-
-
 const MobileMenu = memo(function MobileMenu({
     isOpen,
     activeHref,
     onClose,
     onNavigate,
+    isEnglish,
     onLanguageToggle,
-}: MobileMenuProps) {
+}: {
+    isOpen: boolean;
+    activeHref: string;
+    onClose: () => void;
+    onNavigate: (href: string) => void;
+    isEnglish: boolean;
+    onLanguageToggle: () => void;
+}) {
+    const navItems = isEnglish ? NAV_ITEMS_EN : NAV_ITEMS_AR;
+
     return (
         <>
             <div
                 aria-hidden="true"
                 onClick={onClose}
                 className={`fixed inset-0 z-0 bg-black/20 backdrop-blur-[2px] transition-[opacity,visibility] duration-300 motion-reduce:transition-none ${isOpen
-                    ? "visible opacity-100"
-                    : "invisible opacity-0"
+                        ? "visible opacity-100"
+                        : "invisible opacity-0"
                     }`}
             />
 
             <nav
                 id="mobile-menu"
-                aria-label="القائمة الرئيسية للجوال"
+                aria-label={
+                    isEnglish
+                        ? "Main navigation"
+                        : "القائمة الرئيسية للجوال"
+                }
+                dir={isEnglish ? "ltr" : "rtl"}
                 className={`fixed inset-x-4 top-24 z-10 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain rounded-4xl border border-white/10 bg-[#080711]/95 p-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out motion-reduce:transition-none dark:border-white/40 dark:bg-[#efeffa]/95 dark:text-[#29253d] dark:shadow-[0_20px_60px_rgba(20,15,55,0.22)] sm:inset-x-6 ${isOpen
-                    ? "visible translate-y-0 scale-100 opacity-100"
-                    : "invisible -translate-y-3 scale-[0.98] opacity-0"
+                        ? "visible translate-y-0 scale-100 opacity-100"
+                        : "invisible -translate-y-3 scale-[0.98] opacity-0"
                     }`}
             >
                 <ul className="flex flex-col">
-                    {NAV_ITEMS.map(({ label, href }) => {
+                    {navItems.map(({ label, href }) => {
                         const isActive = activeHref === href;
 
                         return (
@@ -168,8 +171,8 @@ const MobileMenu = memo(function MobileMenu({
                                         isActive ? "page" : undefined
                                     }
                                     className={`group flex min-h-12 items-center justify-between rounded-xl px-4 text-[15px] font-semibold text-white transition-colors duration-300 dark:text-[#29253d] ${isActive
-                                        ? "bg-white/10 dark:bg-white/65"
-                                        : "hover:bg-white/10 dark:hover:bg-white/50"
+                                            ? "bg-white/10 dark:bg-white/65"
+                                            : "hover:bg-white/10 dark:hover:bg-white/50"
                                         } ${FOCUS_RING}`}
                                 >
                                     <span>{label}</span>
@@ -194,23 +197,31 @@ const MobileMenu = memo(function MobileMenu({
 
                     <button
                         type="button"
-                        lang="en"
+                        lang={isEnglish ? "ar" : "en"}
                         onClick={onLanguageToggle}
-                        aria-label="تغيير اللغة إلى الإنجليزية"
+                        aria-label={
+                            isEnglish
+                                ? "تغيير اللغة إلى العربية"
+                                : "تغيير اللغة إلى الإنجليزية"
+                        }
                         className={`flex h-10 w-11 shrink-0 items-center justify-center rounded-full bg-[#17171f] text-[11px] font-bold text-white shadow-sm transition-colors duration-300 hover:bg-[#5b58c6] hover:text-white dark:bg-white dark:text-[#29253d] dark:hover:bg-[#5b58c6] ${FOCUS_RING}`}
                     >
-                        EN
+                        {isEnglish ? "AR" : "EN"}
                     </button>
 
                     <Link
-                        href="/#contact"
+                        href={isEnglish ? "/en#contact" : "/#contact"}
                         onClick={() => {
-                            onNavigate("/#contact");
+                            onNavigate(
+                                isEnglish
+                                    ? "/en#contact"
+                                    : "/#contact",
+                            );
                             onClose();
                         }}
                         className={`flex h-10 flex-1 items-center justify-center whitespace-nowrap rounded-full bg-linear-to-r from-[#6874e8] to-[#4fd7d9] px-3 text-[12px] font-bold text-white shadow-[0_8px_25px_rgba(79,215,217,0.2)] transition-transform duration-300 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:scale-100 ${FOCUS_RING}`}
                     >
-                        ابدأ مشروعك
+                        {isEnglish ? "Start Your Project" : "ابدأ مشروعك"}
                     </Link>
                 </div>
             </nav>
@@ -218,20 +229,26 @@ const MobileMenu = memo(function MobileMenu({
     );
 });
 
-
-
-export default function Navbar({
-    onLanguageToggle,
-}: NavbarProps) {
+export default function Navbar() {
     const pathname = usePathname();
+    const router = useRouter();
+
+    const isEnglish = pathname.startsWith("/en");
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMenuMounted, setIsMenuMounted] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const [activeHref, setActiveHref] = useState("/");
+
+    const [activeHref, setActiveHref] = useState(
+        isEnglish ? "/en" : "/",
+    );
 
     const toggleButtonRef =
         useRef<HTMLButtonElement>(null);
+
+    const navItems = isEnglish
+        ? NAV_ITEMS_EN
+        : NAV_ITEMS_AR;
 
     const closeMenu = useCallback(() => {
         setIsMenuOpen(false);
@@ -246,6 +263,15 @@ export default function Navbar({
         setActiveHref(href);
     }, []);
 
+    const handleLanguageToggle = useCallback(() => {
+        setIsMenuOpen(false);
+
+        if (isEnglish) {
+            router.push("/");
+        } else {
+            router.push("/en");
+        }
+    }, [isEnglish, router]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -268,10 +294,11 @@ export default function Navbar({
         };
     }, []);
 
-
     useEffect(() => {
         const updateActiveSection = () => {
-            setActiveHref(getActiveHref());
+            setActiveHref(
+                getActiveHref(isEnglish),
+            );
         };
 
         updateActiveSection();
@@ -287,15 +314,16 @@ export default function Navbar({
                 updateActiveSection,
             );
         };
-    }, [pathname]);
-
+    }, [pathname, isEnglish]);
 
     useEffect(() => {
         if (!isMenuOpen) {
             return;
         }
 
-        const handleKeyDown = (event: KeyboardEvent) => {
+        const handleKeyDown = (
+            event: KeyboardEvent,
+        ) => {
             if (event.key === "Escape") {
                 setIsMenuOpen(false);
                 toggleButtonRef.current?.focus();
@@ -338,23 +366,32 @@ export default function Navbar({
 
     return (
         <header
-            dir="rtl"
+            dir={isEnglish ? "ltr" : "rtl"}
             className={`fixed inset-x-0 top-0 z-50 px-3 transition-[padding] duration-500 motion-reduce:transition-none sm:px-5 lg:px-8 ${isScrolled ? "pt-3" : "pt-4"
                 }`}
         >
             <nav
-                aria-label="التنقل الرئيسي"
+                aria-label={
+                    isEnglish
+                        ? "Main navigation"
+                        : "التنقل الرئيسي"
+                }
                 className={`relative z-20 mx-auto flex h-16 max-w-360 items-center gap-3 rounded-2xl border px-3 transition-[background-color,box-shadow,border-color,backdrop-filter,color] duration-500 ease-out motion-reduce:transition-none sm:h-17 sm:px-5 lg:h-19 lg:gap-5 lg:px-6 xl:px-7 ${isScrolled
-                    ? "border-white/10 bg-[#080711]/90 text-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl backdrop-saturate-150 dark:border-white/50 dark:bg-[#e6e5f3]/80 dark:text-[#29253d] dark:shadow-[0_12px_40px_rgba(20,15,55,0.16)]"
-                    : "border-white/10 bg-[#080711] text-white shadow-[0_10px_35px_rgba(0,0,0,0.18)] dark:border-black/5 dark:bg-white dark:text-[#29253d] dark:shadow-[0_10px_35px_rgba(20,15,55,0.10)]"
+                        ? "border-white/10 bg-[#080711]/90 text-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl backdrop-saturate-150 dark:border-white/50 dark:bg-[#e6e5f3]/80 dark:text-[#29253d] dark:shadow-[0_12px_40px_rgba(20,15,55,0.16)]"
+                        : "border-white/10 bg-[#080711] text-white shadow-[0_10px_35px_rgba(0,0,0,0.18)] dark:border-black/5 dark:bg-white dark:text-[#29253d] dark:shadow-[0_10px_35px_rgba(20,15,55,0.10)]"
                     }`}
             >
-
                 <Link
-                    href="/"
-                    aria-label="Atooz - الرئيسية"
+                    href={isEnglish ? "/en" : "/"}
+                    aria-label={
+                        isEnglish
+                            ? "Atooz - Home"
+                            : "Atooz - الرئيسية"
+                    }
                     onClick={() => {
-                        handleNavigate("/");
+                        handleNavigate(
+                            isEnglish ? "/en" : "/",
+                        );
                         closeMenu();
                     }}
                     className={`relative flex h-full w-28 shrink-0 items-center rounded-full sm:w-32 lg:w-40 ${FOCUS_RING}`}
@@ -382,9 +419,8 @@ export default function Navbar({
                 </Link>
 
                 {/* Desktop Navigation */}
-
                 <ul className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-                    {NAV_ITEMS.map(({ label, href }) => {
+                    {navItems.map(({ label, href }) => {
                         const isActive =
                             activeHref === href;
 
@@ -401,8 +437,8 @@ export default function Navbar({
                                             : undefined
                                     }
                                     className={`group relative block rounded-full px-3 py-2.5 text-[13px] font-semibold whitespace-nowrap text-white transition-colors duration-300 dark:text-[#29253d] xl:px-3.5 ${isActive
-                                        ? "bg-white/10 shadow-sm dark:bg-white/55"
-                                        : "hover:bg-white/10 dark:hover:bg-[#dfe9ff]/80"
+                                            ? "bg-white/10 shadow-sm dark:bg-white/55"
+                                            : "hover:bg-white/10 dark:hover:bg-[#dfe9ff]/80"
                                         } ${FOCUS_RING}`}
                                 >
                                     {label}
@@ -410,8 +446,8 @@ export default function Navbar({
                                     <span
                                         aria-hidden="true"
                                         className={`absolute bottom-1 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-linear-to-r from-[#4fd7d9] via-[#6388ed] to-[#6874e8] transition-[width,opacity] duration-300 motion-reduce:transition-none ${isActive
-                                            ? "w-5 opacity-100"
-                                            : "w-0 opacity-0 group-hover:w-5 group-hover:opacity-100 group-focus-visible:w-5 group-focus-visible:opacity-100"
+                                                ? "w-5 opacity-100"
+                                                : "w-0 opacity-0 group-hover:w-5 group-hover:opacity-100 group-focus-visible:w-5 group-focus-visible:opacity-100"
                                             }`}
                                     />
                                 </Link>
@@ -421,7 +457,6 @@ export default function Navbar({
                 </ul>
 
                 {/* Desktop Actions */}
-
                 <div className="hidden shrink-0 items-center gap-2 lg:flex">
                     <SocialLinks />
 
@@ -429,25 +464,34 @@ export default function Navbar({
 
                     <button
                         type="button"
-                        lang="en"
-                        onClick={onLanguageToggle}
-                        aria-label="تغيير اللغة إلى الإنجليزية"
+                        lang={
+                            isEnglish ? "ar" : "en"
+                        }
+                        onClick={handleLanguageToggle}
+                        aria-label={
+                            isEnglish
+                                ? "تغيير اللغة إلى العربية"
+                                : "تغيير اللغة إلى الإنجليزية"
+                        }
                         className={`flex h-9 min-w-9 items-center justify-center rounded-full bg-[#17171f] px-3 text-[11px] font-bold text-white shadow-sm transition-colors duration-300 hover:bg-[#5b58c6] hover:text-white dark:bg-white dark:text-[#29253d] dark:hover:bg-[#5b58c6] ${FOCUS_RING}`}
                     >
-                        EN
+                        {isEnglish ? "AR" : "EN"}
                     </button>
                 </div>
 
                 {/* Mobile Menu Button */}
-
                 <button
                     ref={toggleButtonRef}
                     type="button"
                     onClick={toggleMenu}
                     aria-label={
                         isMenuOpen
-                            ? "إغلاق القائمة"
-                            : "فتح القائمة"
+                            ? isEnglish
+                                ? "Close menu"
+                                : "إغلاق القائمة"
+                            : isEnglish
+                                ? "Open menu"
+                                : "فتح القائمة"
                     }
                     aria-expanded={isMenuOpen}
                     aria-controls="mobile-menu"
@@ -475,7 +519,10 @@ export default function Navbar({
                     activeHref={activeHref}
                     onClose={closeMenu}
                     onNavigate={handleNavigate}
-                    onLanguageToggle={onLanguageToggle}
+                    isEnglish={isEnglish}
+                    onLanguageToggle={
+                        handleLanguageToggle
+                    }
                 />
             )}
         </header>

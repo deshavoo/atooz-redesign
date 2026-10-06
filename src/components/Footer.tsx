@@ -2,10 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { motion, useReducedMotion } from "motion/react";
 
-import { ArrowUpLeft, Mail, MapPin, Phone } from "lucide-react";
+import {
+  ArrowUpLeft,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 
 import {
   FaBehance,
@@ -14,16 +20,26 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 
-const navLinks = [
-  { label: "الرئيسية", href: "/" },
-  { label: "كيف نصنع التأثير", href: "#impact" },
-  { label: "رؤيتنا", href: "#vision" },
-  { label: "شركاؤنا", href: "#partners" },
-  { label: "اتصل بنا", href: "#contact" },
-];
+const navLinks = {
+  ar: [
+    { label: "الرئيسية", href: "/" },
+    { label: "كيف نصنع التأثير", href: "#impact" },
+    { label: "رؤيتنا", href: "#vision" },
+    { label: "شركاؤنا", href: "#partners" },
+    { label: "اتصل بنا", href: "#contact" },
+  ],
+  en: [
+    { label: "Home", href: "/en" },
+    { label: "How We Create Impact", href: "/en#impact" },
+    { label: "Our Vision", href: "/en#vision" },
+    { label: "Our Partners", href: "/en#partners" },
+    { label: "Contact Us", href: "/en#contact" },
+  ],
+};
 
 const CONTACT = {
   address: "الرياض - حي الملك فهد - حي العليا",
+  addressEn: "Riyadh - King Fahd District - Al Olaya District",
   email: "info@atooz.sa",
   phone: "+201155290421",
   phoneHref: "tel:+201155290421",
@@ -52,7 +68,8 @@ const socials = [
   },
 ];
 
-const DEV_URL = "https://portfolio-five-gules-41.vercel.app/";
+const DEV_URL =
+  "https://portfolio-five-gules-41.vercel.app/";
 
 const techStack = [
   "Next.js",
@@ -70,7 +87,14 @@ const ring =
   "outline-none focus-visible:ring-1 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#080711] rounded-sm light:focus-visible:ring-cyan-600/60 light:focus-visible:ring-offset-[#f5f7fa]";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
+
   const reduce = useReducedMotion();
+
+  const currentNavLinks = isEnglish
+    ? navLinks.en
+    : navLinks.ar;
 
   const reveal = (delay = 0, y = 20) =>
     reduce
@@ -111,36 +135,36 @@ export default function Footer() {
 
   return (
     <footer
-      dir="rtl"
+      dir={isEnglish ? "ltr" : "rtl"}
       className="relative overflow-hidden border-t border-white/10 bg-[#080711] font-[Cairo,sans-serif] text-white light:border-black/8 light:bg-[#f5f7fa] light:text-[#10131a]"
     >
       <style>{`
-                @keyframes a2z-marquee {
-                    0% {
-                        transform: translate3d(0, 0, 0);
-                    }
+        @keyframes a2z-marquee {
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
 
-                    100% {
-                        transform: translate3d(-50%, 0, 0);
-                    }
-                }
+          100% {
+            transform: translate3d(-50%, 0, 0);
+          }
+        }
 
-                .a2z-marquee-track {
-                    animation: a2z-marquee 35s linear infinite;
-                    will-change: transform;
-                }
+        .a2z-marquee-track {
+          animation: a2z-marquee 35s linear infinite;
+          will-change: transform;
+        }
 
-                .a2z-marquee-track:hover {
-                    animation-play-state: paused;
-                }
+        .a2z-marquee-track:hover {
+          animation-play-state: paused;
+        }
 
-                @media (prefers-reduced-motion: reduce) {
-                    .a2z-marquee-track {
-                        animation: none;
-                        transform: translate3d(0, 0, 0);
-                    }
-                }
-            `}</style>
+        @media (prefers-reduced-motion: reduce) {
+          .a2z-marquee-track {
+            animation: none;
+            transform: translate3d(0, 0, 0);
+          }
+        }
+      `}</style>
 
       <span
         aria-hidden="true"
@@ -149,12 +173,13 @@ export default function Footer() {
 
       <div className="mx-auto max-w-7xl px-6 pb-5 pt-10 lg:px-10 lg:pb-6 lg:pt-12">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          {/* Brand */}
           <motion.div
             {...reveal(0)}
             className="lg:col-span-5"
           >
             <Link
-              href="/"
+              href={isEnglish ? "/en" : "/"}
               aria-label="A2Z Media Hub"
               className={`group inline-flex items-center ${ring}`}
             >
@@ -171,34 +196,44 @@ export default function Footer() {
             </Link>
 
             <p className="mt-5 max-w-sm text-sm leading-7 text-white/45 sm:text-base light:text-[#10131a]/50">
-              حلول إعلامية واتصالية تصنع تأثيرًا طويل المدى.
+              {isEnglish
+                ? "Media and communication solutions that create lasting impact."
+                : "حلول إعلامية واتصالية تصنع تأثيرًا طويل المدى."}
             </p>
 
             <Link
-              href="#contact"
+              href={isEnglish ? "/en#contact" : "#contact"}
               className={`group mt-6 inline-flex items-center gap-3 border-b border-cyan-300/35 pb-2 text-sm font-semibold text-white transition-colors duration-300 hover:border-cyan-300 hover:text-cyan-300 sm:text-base light:border-cyan-600/35 light:text-[#10131a] light:hover:border-cyan-600 light:hover:text-cyan-700 ${ring}`}
             >
-              ابدأ مشروعك معنا
+              {isEnglish
+                ? "Start Your Project"
+                : "ابدأ مشروعك معنا"}
 
               <ArrowUpLeft
                 aria-hidden="true"
                 strokeWidth={1.7}
-                className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1"
+                className={`h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 ${isEnglish ? "rotate-90" : ""
+                  }`}
               />
             </Link>
           </motion.div>
 
+          {/* Navigation */}
           <motion.nav
             {...reveal(0.08)}
-            aria-label="روابط التذييل"
+            aria-label={
+              isEnglish
+                ? "Footer navigation"
+                : "روابط التذييل"
+            }
             className="lg:col-span-3"
           >
             <h2 className="mb-5 text-xs font-medium text-white/25 light:text-[#10131a]/35">
-              استكشف
+              {isEnglish ? "Explore" : "استكشف"}
             </h2>
 
             <ul className="grid gap-3">
-              {navLinks.map((link) => (
+              {currentNavLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
@@ -213,15 +248,17 @@ export default function Footer() {
             </ul>
           </motion.nav>
 
+          {/* Contact */}
           <motion.div
             {...reveal(0.16)}
             className="lg:col-span-4"
           >
             <h2 className="mb-5 text-xs font-medium text-white/25 light:text-[#10131a]/35">
-              تواصل معنا
+              {isEnglish ? "Get in touch" : "تواصل معنا"}
             </h2>
 
             <ul className="grid gap-3.5 text-sm text-white/45 light:text-[#10131a]/55">
+              {/* Location */}
               <li className="group flex items-start gap-3.5 transition-colors duration-300 hover:text-white light:hover:text-[#10131a]">
                 <MapPin
                   aria-hidden="true"
@@ -230,10 +267,13 @@ export default function Footer() {
                 />
 
                 <address className="not-italic">
-                  {CONTACT.address}
+                  {isEnglish
+                    ? CONTACT.addressEn
+                    : CONTACT.address}
                 </address>
               </li>
 
+              {/* Email */}
               <li className="group flex items-center gap-3.5">
                 <Mail
                   aria-hidden="true"
@@ -250,6 +290,7 @@ export default function Footer() {
                 </a>
               </li>
 
+              {/* Phone */}
               <li className="group flex items-center gap-3.5">
                 <Phone
                   aria-hidden="true"
@@ -267,6 +308,7 @@ export default function Footer() {
               </li>
             </ul>
 
+            {/* Social links */}
             <div className="mt-6 flex items-center gap-2.5">
               {socials.map(
                 ({
@@ -293,6 +335,7 @@ export default function Footer() {
           </motion.div>
         </div>
 
+        {/* Tech marquee */}
         <motion.div
           {...reveal(0.08, 0)}
           className="mt-8 border-t border-white/5 pt-5 light:border-black/8"
@@ -311,10 +354,7 @@ export default function Footer() {
               className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-[#080711] via-[#080711]/80 to-transparent sm:w-28 light:from-[#f5f7fa] light:via-[#f5f7fa]/80"
             />
 
-            <div
-              aria-hidden="true"
-              className="overflow-hidden text-[10px] text-white/20 sm:text-xs light:text-[#10131a]/20"
-            >
+            <div className="overflow-hidden text-[10px] text-white/20 sm:text-xs light:text-[#10131a]/20">
               <div className="a2z-marquee-track flex w-max">
                 <div className="flex shrink-0 items-center">
                   {marqueeGroup}
@@ -333,6 +373,7 @@ export default function Footer() {
           </div>
         </motion.div>
 
+        {/* Copyright */}
         <motion.div
           {...reveal(0.12, 0)}
           className="mt-5 flex flex-col gap-2 border-t border-white/5 pt-4 text-[10px] text-white/25 sm:flex-row sm:items-center sm:justify-between sm:text-xs light:border-black/8 light:text-[#10131a]/35"
@@ -341,14 +382,20 @@ export default function Footer() {
             dir="ltr"
             className="text-right"
           >
-            © 2026 A2Z Media Hub. All rights reserved.
+            © 2026 A2Z Media Hub.{" "}
+            {isEnglish
+              ? "All rights reserved."
+              : "جميع الحقوق محفوظة."}
           </p>
 
           <p
             dir="ltr"
             className="text-right sm:text-left"
           >
-            developed by{" "}
+            {isEnglish
+              ? "Developed by"
+              : "تم التطوير بواسطة"}{" "}
+
             <a
               href={DEV_URL}
               target="_blank"

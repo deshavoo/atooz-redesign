@@ -1,78 +1,140 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
 
-const services = [
-    {
-        title: "صناعة المحتوى",
-        description:
-            "نصنع محتوى له هدف وصوت واضح، من الفكرة الأولى وحتى الطريقة التي تصل بها الرسالة إلى الجمهور.",
-    },
-    {
-        title: "الهوية الإعلامية",
-        description:
-            "نبني حضورًا بصريًا واضحًا يعكس شخصية العلامة ويمنحها لغة يمكن للجمهور تمييزها وتذكرها.",
-    },
-    {
-        title: "الحملات الرقمية",
-        description:
-            "نحوّل الفكرة إلى حملة متكاملة تجمع بين الرسالة والمحتوى والإبداع لصناعة حضور مؤثر.",
-    },
-];
+const services = {
+    ar: [
+        {
+            title: "صناعة المحتوى",
+            description:
+                "نصنع محتوى له هدف وصوت واضح، من الفكرة الأولى وحتى الطريقة التي تصل بها الرسالة إلى الجمهور.",
+        },
+        {
+            title: "الهوية الإعلامية",
+            description:
+                "نبني حضورًا بصريًا واضحًا يعكس شخصية العلامة ويمنحها لغة يمكن للجمهور تمييزها وتذكرها.",
+        },
+        {
+            title: "الحملات الرقمية",
+            description:
+                "نحوّل الفكرة إلى حملة متكاملة تجمع بين الرسالة والمحتوى والإبداع لصناعة حضور مؤثر.",
+        },
+    ],
+    en: [
+        {
+            title: "Content Creation",
+            description:
+                "We create purposeful content with a clear voice, from the first idea to the way the message reaches the audience.",
+        },
+        {
+            title: "Media Identity",
+            description:
+                "We build a clear visual presence that reflects the brand's personality and gives it a language the audience can recognize and remember.",
+        },
+        {
+            title: "Digital Campaigns",
+            description:
+                "We turn ideas into integrated campaigns that combine messaging, content, and creativity to create an impactful presence.",
+        },
+    ],
+};
 
-const slides = [
-    {
-        src: "/images/our-work/work-01.png",
-        service: 0,
-        alt: "مشروع صناعة المحتوى من أعمال A2Z Media Hub",
-    },
-    {
-        src: "/images/our-work/work-02.png",
-        service: 0,
-        alt: "عمل إضافي في صناعة المحتوى من أعمال A2Z Media Hub",
-    },
-    {
-        src: "/images/our-work/work-03.png",
-        service: 1,
-        alt: "مشروع الهوية الإعلامية من أعمال A2Z Media Hub",
-    },
-    {
-        src: "/images/our-work/work-04.png",
-        service: 1,
-        alt: "عمل إضافي في الهوية الإعلامية من أعمال A2Z Media Hub",
-    },
-    {
-        src: "/images/our-work/work-05.png",
-        service: 2,
-        alt: "مشروع الحملات الرقمية من أعمال A2Z Media Hub",
-    },
-    {
-        src: "/images/our-work/work-06.png",
-        service: 2,
-        alt: "عمل إضافي في الحملات الرقمية من أعمال A2Z Media Hub",
-    },
-];
+const slides = {
+    ar: [
+        {
+            src: "/images/our-work/work-01.png",
+            service: 0,
+            alt: "مشروع صناعة المحتوى من أعمال A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-02.png",
+            service: 0,
+            alt: "عمل إضافي في صناعة المحتوى من أعمال A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-03.png",
+            service: 1,
+            alt: "مشروع الهوية الإعلامية من أعمال A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-04.png",
+            service: 1,
+            alt: "عمل إضافي في الهوية الإعلامية من أعمال A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-05.png",
+            service: 2,
+            alt: "مشروع الحملات الرقمية من أعمال A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-06.png",
+            service: 2,
+            alt: "عمل إضافي في الحملات الرقمية من أعمال A2Z Media Hub",
+        },
+    ],
+    en: [
+        {
+            src: "/images/our-work/work-01.png",
+            service: 0,
+            alt: "Content creation project by A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-02.png",
+            service: 0,
+            alt: "Additional content creation project by A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-03.png",
+            service: 1,
+            alt: "Media identity project by A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-04.png",
+            service: 1,
+            alt: "Additional media identity project by A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-05.png",
+            service: 2,
+            alt: "Digital campaign project by A2Z Media Hub",
+        },
+        {
+            src: "/images/our-work/work-06.png",
+            service: 2,
+            alt: "Additional digital campaign project by A2Z Media Hub",
+        },
+    ],
+};
 
 const IMAGE_RATIO = "4 / 3";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function OurWorkSection() {
+    const pathname = usePathname();
+    const isEnglish = pathname.startsWith("/en");
+
+    const lang = isEnglish ? "en" : "ar";
+
+    const currentServices = services[lang];
+    const currentSlides = slides[lang];
+
     const [index, setIndex] = useState(0);
     const startX = useRef<number | null>(null);
 
-    const total = slides.length;
-    const active = slides[index];
-    const service = services[active.service];
+    const total = currentSlides.length;
+    const active = currentSlides[index];
+    const service = currentServices[active.service];
 
     const go = (next: number) => {
         setIndex((next + total) % total);
     };
 
     const goToService = (s: number) => {
-        const firstSlide = slides.findIndex((x) => x.service === s);
+        const firstSlide = currentSlides.findIndex((x) => x.service === s);
 
         if (firstSlide !== -1) {
             go(firstSlide);
@@ -81,11 +143,11 @@ export default function OurWorkSection() {
 
     useEffect(() => {
         const timer = window.setInterval(() => {
-            setIndex((current) => (current + 1) % slides.length);
+            setIndex((current) => (current + 1) % currentSlides.length);
         }, 2000);
 
         return () => window.clearInterval(timer);
-    }, []);
+    }, [currentSlides.length]);
 
     const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === "ArrowLeft") {
@@ -124,6 +186,7 @@ export default function OurWorkSection() {
         <section
             id="work"
             aria-labelledby="our-work-title"
+            dir={isEnglish ? "ltr" : "rtl"}
             className="overflow-x-clip bg-[#080711] px-5 py-20 font-(family-name:--font-cairo) text-white sm:px-8 md:py-28 lg:py-36 light:bg-[#f5f7fa] light:text-[#10131a]"
             style={{ ["--ow-accent" as string]: "#5cc8e0" }}
             onKeyDown={onKeyDown}
@@ -134,7 +197,6 @@ export default function OurWorkSection() {
                         opacity: 0;
                         transform: translateY(14px);
                     }
-
                     to {
                         opacity: 1;
                         transform: none;
@@ -163,11 +225,14 @@ export default function OurWorkSection() {
                             aria-hidden
                             className="h-px w-8 bg-(--ow-accent)"
                         />
-                        أعمالنا
+
+                        {isEnglish ? "Our Work" : "أعمالنا"}
                     </span>
 
                     <span className="block text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
-                        نصنع حضورًا يُرى ويُتذكر
+                        {isEnglish
+                            ? "We create presence that is seen and remembered"
+                            : "نصنع حضورًا يُرى ويُتذكر"}
                     </span>
                 </h2>
 
@@ -177,7 +242,11 @@ export default function OurWorkSection() {
                         style={{ ["--d" as string]: "120ms" }}
                         role="group"
                         aria-roledescription="carousel"
-                        aria-label="معرض أعمالنا"
+                        aria-label={
+                            isEnglish
+                                ? "Our work gallery"
+                                : "معرض أعمالنا"
+                        }
                     >
                         <div
                             className="relative touch-pan-y overflow-hidden rounded-3xl border border-white/10 bg-[#10101A] shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)] light:border-black/10 light:bg-white light:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.16)]"
@@ -185,12 +254,16 @@ export default function OurWorkSection() {
                             onPointerDown={onPointerDown}
                             onPointerUp={onPointerUp}
                         >
-                            {slides.map((slide, i) => (
+                            {currentSlides.map((slide, i) => (
                                 <div
                                     key={slide.src}
                                     role="group"
                                     aria-roledescription="slide"
-                                    aria-label={`${i + 1} من ${total}`}
+                                    aria-label={
+                                        isEnglish
+                                            ? `${i + 1} of ${total}`
+                                            : `${i + 1} من ${total}`
+                                    }
                                     aria-hidden={i !== index}
                                     className={`absolute inset-0 transition duration-500 ease-out motion-reduce:transition-none ${i === index
                                             ? "scale-100 opacity-100"
@@ -220,7 +293,7 @@ export default function OurWorkSection() {
                     >
                         <div aria-live="polite">
                             <div
-                                key={active.service}
+                                key={`${active.service}-${index}`}
                                 className="ow-in"
                                 style={{ ["--d" as string]: "0ms" }}
                             >
@@ -246,7 +319,11 @@ export default function OurWorkSection() {
                                 <button
                                     type="button"
                                     className={ctrl}
-                                    aria-label="العمل السابق"
+                                    aria-label={
+                                        isEnglish
+                                            ? "Previous project"
+                                            : "العمل السابق"
+                                    }
                                     onClick={() => go(index - 1)}
                                 >
                                     <svg
@@ -269,7 +346,11 @@ export default function OurWorkSection() {
                                 <button
                                     type="button"
                                     className={ctrl}
-                                    aria-label="العمل التالي"
+                                    aria-label={
+                                        isEnglish
+                                            ? "Next project"
+                                            : "العمل التالي"
+                                    }
                                     onClick={() => go(index + 1)}
                                 >
                                     <svg
@@ -305,7 +386,8 @@ export default function OurWorkSection() {
                                     <div
                                         className="h-px bg-(--ow-accent) transition-[width] duration-500 motion-reduce:transition-none"
                                         style={{
-                                            width: `${((index + 1) / total) * 100}%`,
+                                            width: `${((index + 1) / total) * 100
+                                                }%`,
                                         }}
                                     />
                                 </div>
@@ -313,7 +395,7 @@ export default function OurWorkSection() {
                         </div>
 
                         <ul className="mt-10 border-t border-white/10 md:mt-12 light:border-black/10">
-                            {services.map((s, i) => {
+                            {currentServices.map((s, i) => {
                                 const isActive = i === active.service;
 
                                 return (

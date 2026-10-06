@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 interface Partner {
   id: number;
@@ -88,6 +89,9 @@ function PartnersRow({
 }
 
 export default function PartnersSection() {
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
+
   return (
     <section
       id="partners"
@@ -181,25 +185,40 @@ export default function PartnersSection() {
 
       <div className="relative w-full">
         <div
-          dir="rtl"
+          dir={isEnglish ? "ltr" : "rtl"}
           className="mx-auto mb-14 max-w-2xl px-5 text-center sm:mb-18 sm:px-8 lg:mb-20"
         >
           <span className="text-sm font-medium tracking-wide text-white/35 light:text-[#10131a]/45">
-            شركاء النجاح
+            {isEnglish
+              ? "Trusted Partners"
+              : "شركاء النجاح"}
           </span>
 
           <h2
             id="partners-heading"
             className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl light:text-[#10131a]"
           >
-            نكبر بثقة{" "}
-            <span className="bg-linear-to-l from-[#775bb1] to-[#397f91] bg-clip-text text-transparent">
-              شركائنا
-            </span>
+            {isEnglish ? (
+              <>
+                Growing with the trust of{" "}
+                <span className="bg-linear-to-l from-[#775bb1] to-[#397f91] bg-clip-text text-transparent">
+                  our partners
+                </span>
+              </>
+            ) : (
+              <>
+                نكبر بثقة{" "}
+                <span className="bg-linear-to-l from-[#775bb1] to-[#397f91] bg-clip-text text-transparent">
+                  شركائنا
+                </span>
+              </>
+            )}
           </h2>
 
           <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/45 sm:text-base light:text-[#10131a]/50">
-            نعتز بالثقة التي منحنا إياها شركاؤنا لصناعة تأثير يتجاوز التوقعات.
+            {isEnglish
+              ? "We value the trust our partners place in us to create impact that goes beyond expectations."
+              : "نعتز بالثقة التي منحنا إياها شركاؤنا لصناعة تأثير يتجاوز التوقعات."}
           </p>
         </div>
 
