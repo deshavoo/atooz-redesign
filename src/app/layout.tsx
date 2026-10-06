@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BackToTop from "@/components/BackToTop";
-import PageEntrance from "@/components/PageEntrance";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Alexandria } from "next/font/google";
 
@@ -71,9 +70,7 @@ export default function RootLayout({
         <CustomCursor />
         <BackToTop />
         <ScrollProgress />
-        <PageEntrance>
-          {children}
-        </PageEntrance>
+        {children}
       </body>
     </html>
   );
