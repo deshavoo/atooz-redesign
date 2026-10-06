@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import BackToTop from "@/components/BackToTop";
 import { Alexandria } from "next/font/google";
 
 import "./globals.css";
@@ -67,6 +67,7 @@ export default function RootLayout({
         className={`${alexandria.variable} bg-white text-[#111827] transition-colors duration-700 dark:bg-[#080a13] dark:text-white`}
       >
         <CustomCursor />
+        <BackToTop />
         {children}
       </body>
     </html>
