@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 
@@ -29,8 +28,8 @@ import {
     type LucideIcon,
 } from "lucide-react";
 
-const GIF_1 = "/videos/A2Z-animation-01.gif";
-const GIF_2 = "/videos/A2Z-animation-02.gif";
+const VIDEO_1 = "/videos/A2Z-animation-01.webm";
+const VIDEO_2 = "/videos/A2Z-animation-02.webm";
 
 type LocalizedItem = {
     ar: string;
@@ -376,7 +375,7 @@ function AccentLine({
     );
 }
 
-function GifFrame({
+function VideoFrame({
     src,
     className = "",
     priority = false,
@@ -390,15 +389,16 @@ function GifFrame({
             className={`relative overflow-hidden border border-white/10 bg-[#10101a] light:border-black/10 light:bg-[#e8ebf0] ${className}`}
             aria-hidden="true"
         >
-            <Image
-                src={src}
-                alt=""
-                fill
-                priority={priority}
-                loading={priority ? "eager" : "lazy"}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-            />
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload={priority ? "auto" : "metadata"}
+                className="absolute inset-0 h-full w-full object-cover"
+            >
+                <source src={src} type="video/webm" />
+            </video>
         </div>
     );
 }
@@ -455,8 +455,8 @@ export default function ImpactSection() {
                                 delay: 0.15,
                             }}
                             className={`my-10 h-px w-40 bg-cyan-300/70 light:bg-cyan-600/60 ${isEnglish
-                                    ? "origin-left"
-                                    : "origin-right"
+                                ? "origin-left"
+                                : "origin-right"
                                 }`}
                         />
 
@@ -479,12 +479,12 @@ export default function ImpactSection() {
                         })}
                         className="lg:col-span-5"
                     >
-                        <GifFrame
-                            src={GIF_1}
+                        <VideoFrame
+                            src={VIDEO_1}
                             priority
                             className={`mx-auto aspect-4/5 max-w-md rounded-4xl rounded-tr-[5rem] ${isEnglish
-                                    ? "lg:mr-0 lg:ml-auto"
-                                    : "lg:mr-auto lg:ml-0"
+                                ? "lg:mr-0 lg:ml-auto"
+                                : "lg:mr-auto lg:ml-0"
                                 }`}
                         />
                     </motion.div>
@@ -561,8 +561,8 @@ export default function ImpactSection() {
                                 delay: 0.15,
                             }}
                             className={`my-10 h-px w-40 bg-cyan-300/70 light:bg-cyan-600/60 ${isEnglish
-                                    ? "origin-left"
-                                    : "origin-right"
+                                ? "origin-left"
+                                : "origin-right"
                                 }`}
                         />
 
@@ -585,11 +585,11 @@ export default function ImpactSection() {
                         })}
                         className="lg:col-span-4"
                     >
-                        <GifFrame
-                            src={GIF_2}
+                        <VideoFrame
+                            src={VIDEO_2}
                             className={`mx-auto aspect-square max-w-sm rounded-tl-[4rem] rounded-br-[4rem] rounded-bl-md rounded-tr-md ${isEnglish
-                                    ? "lg:mr-0 lg:ml-auto"
-                                    : "lg:mr-0 lg:ml-auto"
+                                ? "lg:mr-0 lg:ml-auto"
+                                : "lg:mr-0 lg:ml-auto"
                                 }`}
                         />
                     </motion.div>
@@ -604,8 +604,8 @@ export default function ImpactSection() {
                 <div className="grid gap-16 lg:grid-cols-12 lg:gap-12">
                     <div
                         className={`lg:sticky lg:top-28 lg:col-span-5 lg:self-start ${isEnglish
-                                ? "lg:pr-8"
-                                : "lg:pl-8"
+                            ? "lg:pr-8"
+                            : "lg:pl-8"
                             }`}
                     >
                         <motion.h2
@@ -637,9 +637,9 @@ export default function ImpactSection() {
                                     <article
                                         tabIndex={0}
                                         className={`group grid grid-cols-[auto_1fr_auto] items-start gap-5 border-t border-white/10 px-2 py-8 transition-all duration-400 ease-out hover:-translate-x-1.25 hover:bg-white/2 focus-visible:-translate-x-1.25 focus-visible:bg-white/2 sm:gap-8 light:border-black/10 light:hover:bg-black/2 light:focus-visible:bg-black/2 ${i ===
-                                                impactOutcomes.length - 1
-                                                ? "border-b"
-                                                : ""
+                                            impactOutcomes.length - 1
+                                            ? "border-b"
+                                            : ""
                                             } ${focusRing}`}
                                     >
                                         <span className="pt-1 text-2xl font-light tabular-nums text-white/30 transition-all duration-400 group-hover:-translate-x-1.5 group-hover:text-cyan-300 group-focus-visible:text-cyan-300 light:text-black/30 light:group-hover:text-cyan-700 light:group-focus-visible:text-cyan-700">
@@ -778,8 +778,8 @@ export default function ImpactSection() {
                             ease: "easeInOut",
                         }}
                         className={`absolute top-[1.1rem] hidden h-px w-full bg-linear-to-r from-cyan-300/70 via-white/15 to-white/5 light:from-cyan-600/60 light:via-black/10 light:to-black/5 lg:block ${isEnglish
-                                ? "left-0 origin-left"
-                                : "right-0 origin-right bg-linear-to-l"
+                            ? "left-0 origin-left"
+                            : "right-0 origin-right bg-linear-to-l"
                             }`}
                     />
 
