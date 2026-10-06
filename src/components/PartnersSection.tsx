@@ -33,11 +33,7 @@ function PartnerCard({
       <div className="relative h-18 w-full max-w-55 sm:h-20 sm:max-w-60 lg:h-22 lg:max-w-65">
         <Image
           src={partner.logoUrl}
-          alt={
-            duplicate
-              ? ""
-              : `${partner.name} logo`
-          }
+          alt={duplicate ? "" : `${partner.name} logo`}
           fill
           unoptimized
           sizes="(max-width: 640px) 176px, (max-width: 1024px) 208px, 240px"
@@ -188,7 +184,7 @@ export default function PartnersSection() {
           dir={isEnglish ? "ltr" : "rtl"}
           className="mx-auto mb-14 max-w-2xl px-5 text-center sm:mb-18 sm:px-8 lg:mb-20"
         >
-          <span className="text-sm font-medium tracking-wide text-white/35 light:text-[#10131a]/45">
+          <span className="text-sm font-medium tracking-wide text-white/60 light:text-[#10131a]/65">
             {isEnglish
               ? "Trusted Partners"
               : "شركاء النجاح"}
@@ -215,7 +211,7 @@ export default function PartnersSection() {
             )}
           </h2>
 
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/45 sm:text-base light:text-[#10131a]/50">
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/70 sm:text-base light:text-[#10131a]/70">
             {isEnglish
               ? "We value the trust our partners place in us to create impact that goes beyond expectations."
               : "نعتز بالثقة التي منحنا إياها شركاؤنا لصناعة تأثير يتجاوز التوقعات."}
@@ -243,7 +239,7 @@ export default function PartnersSection() {
         <div className="mx-auto mt-14 flex max-w-md items-center justify-center gap-4 px-5 sm:mt-18">
           <span className="h-px flex-1 bg-linear-to-r from-transparent to-white/10 light:to-black/10" />
 
-          <span className="text-[10px] font-medium tracking-[0.2em] text-white/20 light:text-[#10131a]/25">
+          <span className="text-[10px] font-medium tracking-[0.2em] text-white/60 light:text-[#10131a]/65">
             TRUSTED PARTNERS
           </span>
 

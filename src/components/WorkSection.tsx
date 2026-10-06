@@ -373,7 +373,7 @@ export default function OurWorkSection() {
 
                             <div className="flex-1">
                                 <p
-                                    className="mb-2 text-sm font-medium text-white/50 light:text-[#10131a]/45"
+                                    className="mb-2 text-sm font-medium text-white/70 light:text-[#10131a]/65"
                                     dir="ltr"
                                 >
                                     <span className="text-white light:text-[#10131a]">
@@ -421,7 +421,7 @@ export default function OurWorkSection() {
                                             <span
                                                 className={`text-sm font-semibold transition-colors duration-300 ${isActive
                                                         ? "text-(--ow-accent)"
-                                                        : "text-white/50 group-hover:text-white light:text-[#10131a]/45 light:group-hover:text-[#10131a]"
+                                                        : "text-white/70 group-hover:text-white light:text-[#10131a]/65 light:group-hover:text-[#10131a]"
                                                     }`}
                                                 dir="ltr"
                                             >
